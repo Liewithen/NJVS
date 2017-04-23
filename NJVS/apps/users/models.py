@@ -22,13 +22,14 @@ class VTeam(models.Model):
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=16, unique=True, verbose_name=u"学号")
-    real_name = models.CharField(max_length=30, null=True, verbose_name=u"姓名")
+    real_name = models.CharField(max_length=30, null=True, verbose_name=u"姓名", blank=True)
     gender = models.CharField(max_length=6, choices=(("male", u"男"),("female", u"女")), verbose_name=u"性别", default="male")
     major = models.CharField(max_length=30, verbose_name=u"专业", default="", blank=True)
     department = models.CharField(max_length=30, verbose_name=u"院系", default="", blank=True)
     v_time = models.IntegerField(verbose_name=u"志愿时间", default=0)
     team = models.ManyToManyField(VTeam, verbose_name=u"队伍", blank=True)
     phone_number = models.CharField(max_length=11, verbose_name=u"手机号", blank=True)
+    roles = models.IntegerField(choices=((0, u"管理员"),(1, u"学生"),(2, u"团队")), verbose_name=u"身份", default=1)
     email = models.EmailField(blank=True)
 
     is_active = models.BooleanField(default=True, verbose_name=u"激活状态")

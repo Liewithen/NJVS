@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'users',
     'activity',
-    'news'
+    'news',
+    'verify'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -149,3 +150,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
