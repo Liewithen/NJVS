@@ -52,11 +52,16 @@ class Validate(object):
         '<td.*?>性别</td>.*?<td.*?>&nbsp;(?P<gender>.*?)</td>.*?</tr>'
         , re.S)    
         info = re.search(pattern, res.content)
+        if info.group('gender') == '男':
+            g = 'male'
+        else:
+            g = 'female'
         try:
             u = User.objects.get(username=self.username)
             u.username = self.username
             u.password = self.jwc_pwd
             u.real_name = info.group('name')
+            u.gender = g
             u.department = info.group('department')
             u.major = info.group('major')
             u.roles = 1
@@ -65,6 +70,7 @@ class Validate(object):
             User.objects.create(username=self.username,
                                 password = self.jwc_pwd,
                                 real_name = info.group('name'),
+                                gender = g,
                                 department = info.group('department'),
                                 major = info.group('major'),
                                 roles = 1)
