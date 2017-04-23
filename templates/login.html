@@ -4,12 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>Document</title>
 </head>
-<h1>welcome to NJVS</h1>
-{% if not request.user.is_authenticated %}
-<h2>没有登录</h2>
-{% else %}
-<h2>{{ request.user.username }}登录成功</h2>
-{% endif %}
-<a href="/login">登录</a>
+<body>
+    <form action="/login/" method="post">
+        <input type="text" name="username" value="yangs"> </br>
+        <input type="password" name="password" value="sy174511">
+        <input type="submit">
+    {% csrf_token %}
+    </form>
+    <h1>{{ msg }}</h1>
+    <a href="/validate">验证</a>
 </body>
 </html>

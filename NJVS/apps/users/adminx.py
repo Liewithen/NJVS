@@ -14,9 +14,9 @@ class BaseSetting(object):
   
 
 class UserAdmin(object):
-    list_display = ('id', 'username', 'real_name', 'gender', 'team', 'phone_number', 'department', 'v_time')
+    list_display = ('id', 'roles', 'username', 'real_name', 'gender', 'team', 'phone_number', 'department', 'v_time')
     search_fields = ['username', 'real_name']
-    list_filter = ['username', 'real_name', 'team', 'department']
+    list_filter = ['roles', 'username', 'real_name', 'team', 'department']
     show_detail_fields = ['id']
     list_export = ['xls']
 

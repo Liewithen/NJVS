@@ -2,6 +2,8 @@
 import re
 import requests
 from hashlib import md5
+from verify.models import UserValidate
+from users.models import User
 
 class Validate(object):
 
@@ -12,15 +14,28 @@ class Validate(object):
     def judge(self):
         self.httpclient = requests.Session()
         self.rooturl = 'http://202.119.81.112:9080'
+        self.jwc_pwd = md5(self.password.encode('utf-8')).hexdigest()
         data = {
             'method' : 'verify',
             'USERNAME' : self.username.encode('utf-8'),
-            'PASSWORD' : md5(self.password.encode('utf-8')).hexdigest().upper()
+            'PASSWORD' : self.jwc_pwd.upper()
         }
         r = self.httpclient.get(self.rooturl + '/njlgdx/xk/LoginToXk', params=data)
+        try:
+            u = UserValidate.objects.get(username=self.username)
+            u.validate = 0
+            u.save()
+        except UserValidate.DoesNotExist:
+            UserValidate.objects.create(username=self.username, validate=0)
         if (r.url == self.rooturl + '/njlgdx/framework/main.jsp'):
+            u = UserValidate.objects.get(username=self.username)
+            u.validate = 1
+            u.save()
             return True
         else:
+            u = UserValidate.objects.get(username=self.username)
+            u.validate = 2
+            u.save()
             self.httpclient.cookies.clear()
             return False
 
@@ -31,36 +46,27 @@ class Validate(object):
         '<tr.*?>.*?</tr>.*?' +
         '<tr.*?>.*?' +
         '<td.*?>院系：(?P<department>.*?)</td>.*?' +
-        '<td.*?>专业：(?P<major>.*?)</td>.*?<td.*?>.*?</td>' +
-        '<td.*?>班级：(?P<class>.*?)</td>.*?' +
-        '<td.*?>学号：(?P<studentID>.*?)</td>.*?' +
-        '</tr>.*?' +
-        '<tr.*?>.*?' +
-        '<td.*?>姓名</td>.*?' +
-        '<td.*?>&nbsp;(?P<name>.*?)</td>.*?' +
-        '<td.*?>性别</td>.*?' +
-        '<td.*?>&nbsp;(?P<gender>.*?)</td>.*?' +
-        '</tr>', re.S)
-        res.encoding = 'utf-8'       
-        info = re.search(pattern, res.text)
-        if (info == None):
-            return {
-                'flag' : False
-            }
-        else:
-            return {
-                'flag' : True,
-                'department' : info.group('department'),
-                'major' : info.group('major'),
-                'class' : info.group('class'),
-                'studentID' : info.group('studentID'),
-                'name' : info.group('name'),
-                'gender' : info.group('gender')
-            }
-
+        '<td.*?>专业：(?P<major>.*?)</td>.*?' +
+        '</tr>.*?<tr.*?>.*?' + 
+        '<td.*?>姓名</td>.*?<td.*?>&nbsp;(?P<name>.*?)</td>.*?' +
+        '<td.*?>性别</td>.*?<td.*?>&nbsp;(?P<gender>.*?)</td>.*?</tr>'
+        , re.S)    
+        info = re.search(pattern, res.content)
+        try:
+            u = User.objects.get(username=self.username)
+            u.username = self.username
+            u.password = self.jwc_pwd
+            u.real_name = info.group('name')
+            u.department = info.group('department')
+            u.major = info.group('major')
+            u.roles = 1
+            u.save()
+        except User.DoesNotExist:
+            User.objects.create(username=self.username,
+                                password = self.jwc_pwd,
+                                real_name = info.group('name'),
+                                department = info.group('department'),
+                                major = info.group('major'),
+                                roles = 1)
         
-if __name__ == '__main__':
-    v = Validate('914106840629', '174511')
-    if (v.judge()) :
-        print v.fetch_info()
         

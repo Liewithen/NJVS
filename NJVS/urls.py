@@ -1,15 +1,13 @@
-# -*- coding: utf-8 -*-
 from django.conf.urls import url
-from django.contrib import admin
-
-import xadmin                        # 覆盖admin配置
-xadmin.autodiscover()
-from xadmin.plugins import xversion  # version模块自动注册需要版本控制的 Model
-xversion.register_models()
-
+from users.views import LoginView
+from verify.views import ValidateView
+import xadmin
 import views
+
 
 urlpatterns = [
     url(r'^njvs/', xadmin.site.urls),
-    url(r'^$', views.index)
+    url(r'^$', views.index),
+    url(r'^validate/', ValidateView.as_view()),
+    url(r'^login/$', LoginView.as_view())
 ]
