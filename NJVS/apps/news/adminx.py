@@ -9,9 +9,10 @@ class BannerAdmin(object):
     list_export = ['xls']       
 
 class NewsAdmin(object):
-    list_display = ('id', 'title', 'image', 'add_time', 'detail')
+    list_display = ('id', 'title', 'add_time')
     show_detail_fields = ['id']
     list_export = ['xls'] 
+    style_fields = {"detail" : "ueditor"}  
 
 xadmin.site.register(models.Banner, BannerAdmin)
 xadmin.site.register(models.News, NewsAdmin)    

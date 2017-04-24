@@ -34,11 +34,7 @@ sudo apt-get install redis-server
 
 4.新建名为njvs的数据库
 
-5.执行
-
-```
-python manage.py runserver 0.0.0.0:8000
-```
+5.执行 ```python manage.py runserver 0.0.0.0:8000```
 
 
 

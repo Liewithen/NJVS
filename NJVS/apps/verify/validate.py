@@ -10,15 +10,14 @@ class Validate(object):
     def __init__(self, username, password):
         self.username = username
         self.password = password
-
+        self.jwc_pwd = md5(self.password.encode('utf-8'))
     def judge(self):
         self.httpclient = requests.Session()
         self.rooturl = 'http://202.119.81.112:9080'
-        self.jwc_pwd = md5(self.password.encode('utf-8')).hexdigest()
         data = {
             'method' : 'verify',
             'USERNAME' : self.username.encode('utf-8'),
-            'PASSWORD' : self.jwc_pwd.upper()
+            'PASSWORD' : self.jwc_pwd.hexdigest().upper()
         }
         r = self.httpclient.get(self.rooturl + '/njlgdx/xk/LoginToXk', params=data)
         try:
