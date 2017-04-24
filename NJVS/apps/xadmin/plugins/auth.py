@@ -16,7 +16,8 @@ from xadmin.layout import Fieldset, Main, Side, Row, FormHelper
 from xadmin.sites import site
 from xadmin.util import unquote
 from xadmin.views import BaseAdminPlugin, ModelFormAdminView, ModelAdminView, CommAdminView, csrf_protect_m
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 ACTION_NAME = {
     'add': _('Can add %s'),
@@ -56,9 +57,9 @@ class GroupAdmin(object):
 
 class UserAdmin(object):
     change_user_password_template = None
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('id', 'username', 'real_name', 'department', 'team', 'v_time')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
-    search_fields = ('username', 'first_name', 'last_name', 'email')
+    search_fields = ('username',)
     ordering = ('username',)
     style_fields = {'user_permissions': 'm2m_transfer'}
     model_icon = 'fa fa-user'
@@ -86,14 +87,16 @@ class UserAdmin(object):
                              css_class='unsort no_title'
                              ),
                     Fieldset(_('Personal info'),
-                             Row('first_name', 'last_name'),
-                             'email'
+                             Row('real_name', 'gender'),
+                             Row('department', 'v_time'),
+                             Row('major', 'phone_number'),
+                             Row('roles', 'team'),
                              ),
                     Fieldset(_('Permissions'),
                              'groups', 'user_permissions'
                              ),
                     Fieldset(_('Important dates'),
-                             'last_login', 'date_joined'
+                             'last_login',
                              ),
                 ),
                 Side(
@@ -258,7 +261,7 @@ class ChangeAccountPasswordView(ChangePasswordView):
         else:
             return self.get_response()
 
-site.register_view(r'^auth/user/(.+)/password/$',
+site.register_view(r'^users/user/(.+)/password/$',
                    ChangePasswordView, name='user_change_password')
 site.register_view(r'^account/password/$', ChangeAccountPasswordView,
                    name='account_password')

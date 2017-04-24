@@ -18,6 +18,9 @@ class VTeam(models.Model):
         db_table = 'njvs_team'
         verbose_name = u"团队信息"
         verbose_name_plural = u"团队信息"
+    
+    def __unicode__(self):
+        return self.team_name
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -43,4 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = 'njvs_users'
         verbose_name = u"学生信息"
         verbose_name_plural = u"学生信息"
+    
+    def __unicode__(self):
+        return self.real_name
 

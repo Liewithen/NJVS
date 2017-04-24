@@ -8,3 +8,6 @@ class UserValidate(models.Model):
     class Meta:
         verbose_name = u"验证状态"
         verbose_name_plural = verbose_name
+    
+    def __unicode__(self):
+        return self.username

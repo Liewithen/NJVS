@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import xadmin
 from xadmin import views
+from xadmin.plugins.auth import UserAdmin
+from django.contrib.auth.models import User
 from users import models
 
 class GlobalSetting(object):
@@ -11,22 +13,14 @@ class GlobalSetting(object):
 class BaseSetting(object):
     enable_themes = True
     use_bootswatch = True
-  
-
-class UserAdmin(object):
-    list_display = ('id', 'roles', 'username', 'real_name', 'gender', 'team', 'phone_number', 'department', 'v_time')
-    search_fields = ['username', 'real_name']
-    list_filter = ['roles', 'username', 'real_name', 'team', 'department']
-    show_detail_fields = ['id']
-    list_export = ['xls']
 
 class VTeamAdmin(object):
     list_display = ('id', 'team_id', 'team_name', 'team_property', 'person_number', 'v_time')
     show_detail_fields = ['id']
     list_export = ['xls']
+    model_icon = 'fa fa-users'
 
 
-xadmin.site.register(models.User, UserAdmin)
 xadmin.site.register(models.VTeam, VTeamAdmin)
 xadmin.site.register(views.CommAdminView, GlobalSetting)
 xadmin.site.register(views.BaseAdminView, BaseSetting)

@@ -20,13 +20,20 @@ class Activity(models.Model):
         db_table = 'njvs_activity'
         verbose_name = u"活动列表"
         verbose_name_plural = u"活动列表"
+    
+    def __unicode__(self):
+        return self.activity_name
 
 class EnterList(models.Model):
     participant = models.CharField(max_length=16, verbose_name=u"参与者")
     activity = models.CharField(max_length=30, verbose_name=u"活动名称")
     is_checked = models.BooleanField(verbose_name=u"审核状态")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"申报时间")
+
     class Meta:
         db_table = 'njvs_enterlist'
         verbose_name = u"报名列表"
         verbose_name_plural = u"报名列表"
+    
+    def __unicode__(self):
+        return self.participant

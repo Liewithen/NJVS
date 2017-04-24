@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for NJVS project.
 
@@ -40,13 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pure_pagination',
     'reversion',
     'xadmin',
     'crispy_forms',
     'users',
     'activity',
     'news',
-    'verify'
+    'verify',
+    'DjangoUeditor'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -77,6 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 配置media路径
+                'django.template.context_processors.media' 
             ],
             'loaders': [
                 ('django.template.loaders.cached.Loader', [
@@ -152,3 +157,6 @@ STATICFILES_DIRS = (
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
+LOGIN_URL = '/login/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
