@@ -11,6 +11,7 @@ class Validate(object):
         self.username = username
         self.password = password
         self.jwc_pwd = md5(self.password.encode('utf-8'))
+
     def judge(self):
         self.httpclient = requests.Session()
         self.rooturl = 'http://202.119.81.112:9080'
@@ -27,11 +28,13 @@ class Validate(object):
         except UserValidate.DoesNotExist:
             UserValidate.objects.create(username=self.username, validate=0)
         if (r.url == self.rooturl + '/njlgdx/framework/main.jsp'):
+            print self.username + ' is OK'
             u = UserValidate.objects.get(username=self.username)
             u.validate = 1
             u.save()
             return True
         else:
+            print self.username + ' is Faild'
             u = UserValidate.objects.get(username=self.username)
             u.validate = 2
             u.save()
@@ -58,7 +61,7 @@ class Validate(object):
         try:
             u = User.objects.get(username=self.username)
             u.username = self.username
-            u.password = self.jwc_pwd
+            u.set_password(self.password)
             u.real_name = info.group('name')
             u.gender = g
             u.department = info.group('department')
@@ -66,8 +69,8 @@ class Validate(object):
             u.roles = 1
             u.save()
         except User.DoesNotExist:
-            User.objects.create(username=self.username,
-                                password = self.jwc_pwd,
+            User.objects.create_user(username=self.username,
+                                password = self.password,
                                 real_name = info.group('name'),
                                 gender = g,
                                 department = info.group('department'),

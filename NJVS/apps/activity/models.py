@@ -10,6 +10,7 @@ class Activity(models.Model):
     activity_id = models.AutoField(primary_key=True, verbose_name=u"活动ID")
     application_time = models.DateField(auto_now=True, verbose_name=u"申请时间")
     activity_name = models.CharField(max_length=30, verbose_name=u"活动名称")
+    team_name = models.CharField(max_length=100, verbose_name=u"团队名称", default="")
     start_time = models.DateTimeField(verbose_name=u"开始时间") 
     end_time = models.DateTimeField(verbose_name=u"结束时间")
     person_number = models.IntegerField(verbose_name=u"参与人数")

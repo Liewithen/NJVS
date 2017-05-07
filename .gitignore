@@ -26,14 +26,6 @@ templates/UserInfo.txt
 dump.rdb
 /.vscode
 *.conf
-*.jpeg
-*.bmp
-*.jpg
-*.png
-*.gif
-*.psd
-*.svg
-*.tiff
 
 
 

@@ -4,7 +4,7 @@ from xadmin import views
 from news import models
 
 class BannerAdmin(object):
-    list_display = ('id', 'title', 'image', 'url', 'index', 'add_time')
+    list_display = ('id', 'title', 'image', 'url', 'add_time')
     show_detail_fields = ['id']
     list_export = ['xls']       
 

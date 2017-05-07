@@ -9,9 +9,12 @@ from django.core import validators
 class VTeam(models.Model):
     team_id = models.IntegerField(verbose_name=u"账号")
     team_name = models.CharField(max_length=16, verbose_name=u"团队名称")
+    image = models.ImageField(max_length=100, upload_to="team/%Y/%m", verbose_name=u"图片", blank=True)
     team_property = models.IntegerField(verbose_name=u"团队性质")
+    details = models.TextField(verbose_name=u"团队详情", blank=True, default="")
+    leader_id = models.CharField(verbose_name=u"负责人账号", max_length=16, unique=True,)
     person_number = models.IntegerField(verbose_name=u"人数")
-    v_time = models.IntegerField(verbose_name="志愿时间")
+    v_time = models.IntegerField(verbose_name="志愿总时间")
 
 
     class Meta:
@@ -30,7 +33,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     major = models.CharField(max_length=30, verbose_name=u"专业", default="", blank=True)
     department = models.CharField(max_length=30, verbose_name=u"院系", default="", blank=True)
     v_time = models.IntegerField(verbose_name=u"志愿时间", default=0)
-    team = models.ManyToManyField(VTeam, verbose_name=u"队伍", blank=True)
     phone_number = models.CharField(max_length=11, verbose_name=u"手机号", blank=True)
     roles = models.IntegerField(choices=((0, u"管理员"),(1, u"学生"),(2, u"团队")), verbose_name=u"身份", default=1)
     email = models.EmailField(blank=True)
@@ -48,5 +50,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = u"学生信息"
     
     def __unicode__(self):
-        return self.real_name
+        return self.username
 
+
+class Team_User(models.Model):
+    username = models.CharField(max_length=16, unique=True, verbose_name=u"学号")
+    team_id = models.IntegerField(verbose_name=u"团队账号")
+    team_name = models.CharField(max_length=100, verbose_name=u"团队名", default="")
+
+    class Meta:
+        verbose_name = u"学生-团队信息"
+        verbose_name_plural = verbose_name
+    
+    def __unicode__(self):
+        return u'%s_%s' % (self.team_id, self.username)
