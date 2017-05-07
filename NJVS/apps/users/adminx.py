@@ -15,12 +15,21 @@ class BaseSetting(object):
     use_bootswatch = True
 
 class VTeamAdmin(object):
-    list_display = ('id', 'team_id', 'team_name', 'team_property', 'person_number', 'v_time')
+    list_display = ('id', 'team_id', 'team_name', 'team_property', 'image', 'person_number', 'v_time')
     show_detail_fields = ['id']
+    list_filter = ('team_id', 'team_name', 'team_property',)
+    search_fields = ('team_id', 'team_name', 'team_property',)
+    show_bookmarks = False
+    ordering = ('v_time',)
     list_export = ['xls']
     model_icon = 'fa fa-users'
 
+class TeamUserAdmin(object):
+    list_display = ['username', 'team_id', 'team_name']
+    list_export = ['xls']
+    model_icon = 'fa fa-users'
 
 xadmin.site.register(models.VTeam, VTeamAdmin)
+xadmin.site.register(models.Team_User, TeamUserAdmin)
 xadmin.site.register(views.CommAdminView, GlobalSetting)
 xadmin.site.register(views.BaseAdminView, BaseSetting)

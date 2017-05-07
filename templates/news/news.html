@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>文章详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700|Montserrat:700'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/materialize.css">
+    <style>
+      canvas {
+        position:fixed;
+        background-color: #eee;
+        display: block;
+        margin: 0 auto;
+        z-index: -1;
+      }
+      </style>
+  </head>
+
+  <body>
+    <canvas id="canvas"></canvas>
+    <header>
+      <div class="navcontainer">
+        <div class="headrow">
+          <div class="column">
+            <div class="logo">
+              <div class="icon"></div>
+              <div>南京理工大学志愿者服务平台</div>
+            </div>
+          </div>
+          <div class="column">
+            <ul class="nav">
+              <li><a href="#">活动中心</a></li>
+              <li><a href="#">团队登录</a></li>
+              <li><a href="#">个人登录</a></li>
+              <li><a href="#">注册</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+        <div class="row" style="width:100%">
+            <div class="card" style="position:relative;">
+              <div class="card-image">
+                <img src="/static/img/6.jpg">
+                <span class="card-title">{{ news.title }}</span>
+                <div class="fixed-action-btn">
+                  <a class="btn-floating btn-large red">
+                    <i class="large material-icons">thumb_up</i>
+                  </a>
+                  <ul>
+                    <li><a class="btn-floating red"><i class="material-icons">thumb_up</i></a></li>
+                    <li><a class="btn-floating yellow"><i class="material-icons">thumb_up</i></a></li>
+                    <li><a class="btn-floating green"><i class="material-icons">thumb_up</i></a></li>
+                    <li><a class="btn-floating blue"><i class="material-icons">thumb_up</i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-content black-text">
+                {{ news.detail|safe }}
+              </div>
+              <div class="card-action black-text" style="position:absolute;left:0;bottom:0;">
+                <p href="#">编写日期: 2017-1-1  编写人: 蓝气球</p>
+              </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="/static/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/index.js"></script>
+
+    <script src="/static/js/materialize.min.js"></script>
+
+    <script>
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var cw = canvas.width=1920,
+        cx = cw / 2;
+      var ch = canvas.height=1080,
+        cy = ch / 2;
+
+      ctx.fillStyle = "#000";
+      var linesNum = 16;
+      var linesRy = [];
+      var requestId = null;
+
+      function Line(flag) {
+        this.flag = flag;
+        this.a = {};
+        this.b = {};
+        if (flag == "v") {
+          this.a.y = 0;
+          this.b.y = ch;
+          this.a.x = randomIntFromInterval(0, ch);
+          this.b.x = randomIntFromInterval(0, ch);
+        } else if (flag == "h") {
+          this.a.x = 0;
+          this.b.x = cw;
+          this.a.y = randomIntFromInterval(0, cw);
+          this.b.y = randomIntFromInterval(0, cw);
+        }
+        this.va = randomIntFromInterval(25, 100) / 100;
+        this.vb = randomIntFromInterval(25, 100) / 100;
+
+        this.draw = function() {
+
+          ctx.strokeStyle = "#02B1D3";
+          ctx.beginPath();
+          ctx.moveTo(this.a.x, this.a.y);
+          ctx.lineTo(this.b.x, this.b.y);
+          ctx.stroke();
+        }
+
+        this.update = function() {
+          if (this.flag == "v") {
+            this.a.x += this.va;
+            this.b.x += this.vb;
+          } else if (flag == "h") {
+            this.a.y += this.va;
+            this.b.y += this.vb;
+          }
+
+          this.edges();
+        }
+
+        this.edges = function() {
+          if (this.flag == "v") {
+            if (this.a.x < 0 || this.a.x > cw) {
+              this.va *= -1;
+            }
+            if (this.b.x < 0 || this.b.x > cw) {
+              this.vb *= -1;
+            }
+          } else if (flag == "h") {
+            if (this.a.y < 0 || this.a.y > ch) {
+              this.va *= -1;
+            }
+            if (this.b.y < 0 || this.b.y > ch) {
+              this.vb *= -1;
+            }
+          }
+        }
+
+      }
+
+      for (var i = 0; i < linesNum; i++) {
+        var flag = i % 2 == 0 ? "h" : "v";
+        var l = new Line(flag);
+        linesRy.push(l);
+      }
+
+      function Draw() {
+        requestId = window.requestAnimationFrame(Draw);
+        ctx.clearRect(0, 0, cw, ch);
+
+        for (var i = 0; i < linesRy.length; i++) {
+          var l = linesRy[i];
+          l.draw();
+          l.update();
+        }
+        for (var i = 0; i < linesRy.length; i++) {
+          var l = linesRy[i];
+          for (var j = i + 1; j < linesRy.length; j++) {
+            var l1 = linesRy[j]
+            Intersect2lines(l, l1);
+          }
+        }
+      }
+
+      function Init() {
+        linesRy.length = 0;
+        for (var i = 0; i < linesNum; i++) {
+          var flag = i % 2 == 0 ? "h" : "v";
+          var l = new Line(flag);
+          linesRy.push(l);
+        }
+
+        if (requestId) {
+          window.cancelAnimationFrame(requestId);
+          requestId = null;
+        }
+
+        cw = canvas.width=1920,
+          cx = cw / 2;
+        ch = canvas.height=1080,
+          cy = ch / 2;
+
+        Draw();
+      };
+
+      setTimeout(function() {
+        Init();
+
+        addEventListener('resize', Init, false);
+      }, 15);
+
+      function Intersect2lines(l1, l2) {
+        var p1 = l1.a,
+          p2 = l1.b,
+          p3 = l2.a,
+          p4 = l2.b;
+        var denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
+        var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
+        var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
+        var x = p1.x + ua * (p2.x - p1.x);
+        var y = p1.y + ua * (p2.y - p1.y);
+        if (ua > 0 && ub > 0) {
+          markPoint({
+            x: x,
+            y: y
+          })
+        }
+      }
+
+      function markPoint(p) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      function randomIntFromInterval(mn, mx) {
+        return ~~(Math.random() * (mx - mn + 1) + mn);
+      }
+    </script>
+
+    <script>
+      $('.carousel.carousel-slider').carousel({fullWidth: true});
+      function round(){
+      $('.carousel.carousel-slider').carousel('next', 1);
+      }
+      var t2 = window.setInterval("round()",5000);
+    </script>
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="column">
+            <p>Copyright©2017 Liewithen,All Rights Reserved<br>使用过程中有任何问题请联系我们，邮箱:jyyt528@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

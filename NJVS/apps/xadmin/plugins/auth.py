@@ -57,11 +57,13 @@ class GroupAdmin(object):
 
 class UserAdmin(object):
     change_user_password_template = None
-    list_display = ('id', 'username', 'real_name', 'department', 'team', 'v_time')
-    list_filter = ('is_staff', 'is_superuser', 'is_active')
-    search_fields = ('username',)
-    ordering = ('username',)
+    list_display = ('id', 'username', 'real_name', 'department', 'v_time')
+    list_filter = ('username', 'real_name', 'department')
+    search_fields = ('username', 'real_name', 'department')
+    ordering = ('username','v_time')
     style_fields = {'user_permissions': 'm2m_transfer'}
+    list_export = ['xls']
+    show_bookmarks = False
     model_icon = 'fa fa-user'
     relfield_style = 'fk-ajax'
 
@@ -90,7 +92,7 @@ class UserAdmin(object):
                              Row('real_name', 'gender'),
                              Row('department', 'v_time'),
                              Row('major', 'phone_number'),
-                             Row('roles', 'team'),
+                             Row('roles', ),
                              ),
                     Fieldset(_('Permissions'),
                              'groups', 'user_permissions'

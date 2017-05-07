@@ -4,7 +4,7 @@ from xadmin import views
 from activity import models
 
 class ActivityAdmin(object):
-    list_display = ('activity_id', 'application_time', 'activity_name', 'start_time', 'is_checked', 'details')
+    list_display = ('activity_id', 'application_time', 'activity_name', 'team_name', 'start_time', 'is_checked', 'details')
     show_detail_fields = ['details']
     list_editable = ['is_checked']
     list_export = ['xls']
