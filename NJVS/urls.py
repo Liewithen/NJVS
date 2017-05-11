@@ -2,7 +2,7 @@ from django.conf.urls import url
 from users.views import LoginView, LogoutView, UserPageView, TeamPageView
 from verify.views import ValidateView
 from news.views import NewsView
-from activity.views import ActivityView
+from activity.views import ActivityView, ActProfileView
 from django.views.static import serve
 from NJVS.settings import MEDIA_ROOT
 from django.conf.urls import include
@@ -29,6 +29,7 @@ urlpatterns += [
 
 # activity
 urlpatterns += [
-    url(r'^activity', ActivityView.as_view())
+    url(r'^activity', ActivityView.as_view()),
+    url(r'^actprofile', ActProfileView.as_view())
 ]
 

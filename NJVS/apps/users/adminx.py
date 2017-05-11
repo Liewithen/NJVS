@@ -30,6 +30,6 @@ class TeamUserAdmin(object):
     model_icon = 'fa fa-users'
 
 xadmin.site.register(models.VTeam, VTeamAdmin)
-xadmin.site.register(models.Team_User, TeamUserAdmin)
+xadmin.site.register(models.TeamUser, TeamUserAdmin)
 xadmin.site.register(views.CommAdminView, GlobalSetting)
 xadmin.site.register(views.BaseAdminView, BaseSetting)

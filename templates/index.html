@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>南京理工大学-志愿者服务平台</title>
+  <link rel="stylesheet" href="/static/css/reset.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/materialize.css">
   <style>
@@ -41,23 +42,39 @@
 
 <section class="hero">
   <div class="cardboard z-depth-3">
+    <!-- <div class="carousel carousel-slider" style="height:50">
+      <a class="carousel-item" href="#one!"><img src="img/1.jpg"></a>
+      <a class="carousel-item" href="#two!"><img src="img/2.jpg"></a>
+      <a class="carousel-item" href="#three!"><img src="img/3.jpg"></a>
+      <a class="carousel-item" href="#four!"><img src="img/4.jpg"></a>
+    </div> -->
+    <!-- <div class="carousel carousel-slider center" data-indicators="true">
+      <div class="carousel-item amber white-text" href="#two!">
+        <h2>Second Panel</h2>
+        <p class="white-text">This is your second panel</p>
+      </div>
+      <div class="carousel-item green white-text" href="#three!">
+        <h2>Third Panel</h2>
+        <p class="white-text">This is your third panel</p>
+      </div>
+      <div class="carousel-item blue white-text" href="#four!">
+        <h2>Fourth Panel</h2>
+        <p class="white-text">This is your fourth panel</p>
+      </div>
+    </div> -->
     <div class="slider">
       <ul class="slides">
-        {% for banner in banners %}
-         <li>
-          <a href="{{ banner.url }}"><img src="/media/{{ banner.image }}"></a><!-- random image -->
-          <div class="caption center-align">
-          </div>
-        </li>       
-        {% endfor %}
+        <li>
+          <a href="www.baidu.com"><img src=""></a><!-- random image -->
+        </li>
       </ul>
     </div>
     <div class="row" style="margin:5px;">
       <div class="col s8" style="padding:0px;">
-        <a class="waves-effect waves-light btn-large blue" style="margin:5px; width:90px;">新闻</a>
+        <a class="waves-effect waves-light btn-large blue" style="margin:5px;width:90px;">新闻</a>
       </div>
       <div class="col s4" style="padding:0px;">
-        <a class="waves-effect waves-light btn-large red" style="margin:5px; width:90px;">活动</a>
+        <a class="waves-effect waves-light btn-large red" style="margin:5px;width:90px;">活动</a>
       </div>
     </div>
     <div class="row">
@@ -117,8 +134,9 @@
 
 <script src="/static/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="/static/js/index.js"></script>
-<script src="/static/js/materialize.min.js"></script>
 
+<script src="/static/js/materialize.min.js"></script>
+<!-- 背景板 -->
 <script>
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
@@ -270,12 +288,11 @@
     return ~~(Math.random() * (mx - mn + 1) + mn);
   }
 </script>
-
+<!-- 轮播图 -->
 <script>
 $(document).ready(function(){
   $('.slider').slider({full_width: true});
 });
-
 </script>
 
 <div class="footer">

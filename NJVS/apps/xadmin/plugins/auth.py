@@ -57,7 +57,7 @@ class GroupAdmin(object):
 
 class UserAdmin(object):
     change_user_password_template = None
-    list_display = ('id', 'username', 'real_name', 'department', 'v_time')
+    list_display = ('id', 'username', 'real_name', 'department', 'major', 'political', 'v_time')
     list_filter = ('username', 'real_name', 'department')
     search_fields = ('username', 'real_name', 'department')
     ordering = ('username','v_time')
@@ -92,7 +92,8 @@ class UserAdmin(object):
                              Row('real_name', 'gender'),
                              Row('department', 'v_time'),
                              Row('major', 'phone_number'),
-                             Row('roles', ),
+                             Row('roles', 'idcard'),
+                             Row('birthday', 'political'),
                              ),
                     Fieldset(_('Permissions'),
                              'groups', 'user_permissions'
