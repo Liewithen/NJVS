@@ -32,6 +32,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=6, choices=(("male", u"男"),("female", u"女")), verbose_name=u"性别", default="male")
     major = models.CharField(max_length=30, verbose_name=u"专业", default="", blank=True)
     department = models.CharField(max_length=30, verbose_name=u"院系", default="", blank=True)
+    birthday = models.CharField(max_length=8,verbose_name=u"出生日期",blank=True, default="")
+    political = models.CharField(max_length=30,verbose_name=u"政治面貌",blank=True, default="")
+    idcard = models.CharField(max_length=30,verbose_name=u"身份证号",blank=True, default="")
     v_time = models.IntegerField(verbose_name=u"志愿时间", default=0)
     phone_number = models.CharField(max_length=11, verbose_name=u"手机号", blank=True)
     roles = models.IntegerField(choices=((0, u"管理员"),(1, u"学生"),(2, u"团队")), verbose_name=u"身份", default=1)
@@ -53,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
-class Team_User(models.Model):
+class TeamUser(models.Model):
     username = models.CharField(max_length=16, unique=True, verbose_name=u"学号")
     team_id = models.IntegerField(verbose_name=u"团队账号")
     team_name = models.CharField(max_length=100, verbose_name=u"团队名", default="")

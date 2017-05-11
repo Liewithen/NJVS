@@ -44,14 +44,14 @@ class Validate(object):
     def fetch_info(self):
         res = self.httpclient.get(self.rooturl + '/njlgdx/grxx/xsxx')
         pattern = re.compile('<table\sid=\"xjkpTable\".*?>.*?' +
-        '<tr.*?>.*?</tr>.*?' +
-        '<tr.*?>.*?</tr>.*?' +
-        '<tr.*?>.*?' +
+        '<tr.*?>.*?</tr>.*?<tr.*?>.*?</tr>.*?<tr.*?>.*?' +
         '<td.*?>院系：(?P<department>.*?)</td>.*?' +
-        '<td.*?>专业：(?P<major>.*?)</td>.*?' +
-        '</tr>.*?<tr.*?>.*?' + 
+        '<td.*?>专业：(?P<major>.*?)</td>.*?</tr>.*?<tr.*?>.*?' +
         '<td.*?>姓名</td>.*?<td.*?>&nbsp;(?P<name>.*?)</td>.*?' +
-        '<td.*?>性别</td>.*?<td.*?>&nbsp;(?P<gender>.*?)</td>.*?</tr>'
+        '<td.*?>性别</td>.*?<td.*?>&nbsp;(?P<gender>.*?)</td>.*?</tr>.*?<tr.*?>.*?' +
+        '<td.*?>出生日期</td>.*?<td.*?>&nbsp;(?P<birthday>.*?)</td>.*?</tr>.*?<tr>.*?' +
+        '<td.*?>政治面貌</td>.*?<td.*?>&nbsp;(?P<political>.*?)</td>.*?</tr>.*?<tr>.*?'+
+        '<td.*?>身份证编号</td>.*?<td.*?>&nbsp;(?P<id>.*?)</td>.*?</tr>'
         , re.S)    
         info = re.search(pattern, res.content)
         if info.group('gender') == '男':
@@ -67,6 +67,9 @@ class Validate(object):
             u.department = info.group('department')
             u.major = info.group('major')
             u.roles = 1
+            u.birthday = info.group('birthday')
+            u.political = info.group('political')
+            u.idcard = info.group("id")
             u.save()
         except User.DoesNotExist:
             User.objects.create_user(username=self.username,
@@ -75,6 +78,10 @@ class Validate(object):
                                 gender = g,
                                 department = info.group('department'),
                                 major = info.group('major'),
-                                roles = 1)
+                                roles = 1,
+                                birthday = info.group('birthday'),
+                                political = info.group('political'),
+                                idcard = info.group('id')
+                                )
         
         

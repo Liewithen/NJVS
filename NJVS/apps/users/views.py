@@ -49,7 +49,12 @@ class UserPageView(View):
             return HttpResponseRedirect('/')
         userinfo = {
             'name' : user.real_name,
+            'username' : user.username,
+            'idcard' : user.idcard,
             'gender' : user.gender,
+            'email' : user.email,
+            'phone' : user.phone_number,
+            'birthday' : user.birthday,
             'major' : user.major,
             'department' : user.department
         }
