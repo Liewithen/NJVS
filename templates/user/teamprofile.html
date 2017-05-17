@@ -1,16 +1,355 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title></title>
-</head>
-<body>
-    <h2>team</h2>
-    <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/materialize.css">
+    <style>
+      canvas {
+        position:fixed;
+        background-color: #eee;
+        display: block;
+        margin: 0 auto;
+        z-index: -1;
+      }
+      li{
+        list-style: none;
+      }
+      ul{
+        margin: 0px;
+      }
+      </style>
+  </head>
+
+  <body>
+    <canvas id="canvas"></canvas>
+      <ul class="tabs cbp-spmenu cbp-spmenu-open cbp-spmenu-vertical cbp-spmenu-left">
+        <h3>团队中心</h3>
+        <li class="tab"><a class="red waves-effect waves-light active" href="#test1">举办活动</a></li>
+        <li class="tab"><a class="orange waves-effect waves-light" href="#test3">团队资料</a></li>
+        <li class="tab"><a class="blue waves-effect waves-light" href="#test4">修改团队资料</a></li>
+        <li class="tab"><a class="green waves-effect waves-light" href="#test5">活动中心</a></li>
+      </ul>
+        <div id="test1" class="detail-sec">
+           <div class="cardboard" style="height:400px;">
+               <ul class="collection with-header">
+                 <li class="collection-header"><p class="btn red" style="margin:5px;padding:5px;width:auto;height:auto;">即将举办的活动</p></li>
+                 <li class="collection-item"><div>活动1<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+                 <li class="collection-item"><div>活动2<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+               </ul>
+                <ul class="collection with-header">
+                  <li class="collection-header"><a class="btn tooltipped blue waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="单击查看更多" style="margin:5px;padding:5px;width:auto;height:auto;">活动历史记录</a></li>
+                  <li class="collection-item"><div>活动1<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+                  <li class="collection-item"><div>活动2<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+                  <li class="collection-item"><div>活动3<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+                  <li class="collection-item"><div>活动4<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+                </ul>
+           </div>
+
+           <div class="row"style="margin-top:50px;">
+             <div class="col s6" style="padding:20px;">
+               <div class="chip z-depth-5" style="background-color:rgba(255,255,255,0.5)">
+                 <img src="/static/img/time.svg" alt="Contact Person">
+                   累计举办活动数量：
+               </div>
+             </div>
+             <div class="col s6" style="padding:20px;">
+               <div class="chip z-depth-5" style="background-color:rgba(255,255,255,0.5)">
+                 <img src="/static/img/group.svg" alt="Contact Person">
+                   累计参与人次：
+               </div>
+             </div>
+           </div>
+        </div>
+        <div id="test3" class="detail-sec">
+          <div class="cardboard" style="height:400px;">
+
+          </div>
+        </div>
+        <div id="test4" class="detail-sec">
+
+
+          <div class="cardboard black-text">
+            <div class="row" style="padding:10px;position:relative;">
+              <div class="col s6">
+                <div class="input-field">
+                  <input value="李子琛" id="first_name" type="text" disabled="disabled" class="validate">
+                  <label for="name">姓名</label>
+                </div>
+                <div class="input-field">
+                  <input value="914106840523" id="first_name" type="text" class="validate" disabled="disabled">
+                  <label for="StuId">学号</label>
+                </div>
+                <div class="input-field">
+                  <input value="45653452454445"id="first_name" type="text" class="validate" disabled="disable">
+                  <label for="SigId">身份证号</label>
+                </div>
+                <!-- 性别 -->
+                <div class="row">
+                  <div class="col s2">
+                    <p>
+                        性别：
+                    </p>
+                  </div>
+                  <div class="col s2">
+                    <p>
+                      <input type="radio" name="sex" value="1"/>
+                      <label for="test4" class="black-text">男</label>
+                    </p>
+                  </div>
+                  <div class="col s2">
+                    <p>
+                      <input type="radio" name="sex" value="0">
+                      <label for="test4" class="black-text">女</label>
+                    </p>
+                  </div>
+
+
+                </div>
+                <div class="input-field">
+                  <input id="email" type="email" class="validate">
+                  <label for="email" data-error="wrong" data-success="right">邮件</label>
+                </div>
+                <div class="input-field">
+                  <input id="first_name" type="text" class="validate">
+                  <label for="name">电话</label>
+                </div>
+                <div class="input-field">
+                  <select>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="1">机械工程学院</option>
+                    <option value="2">化工学院</option>
+                    <option value="3">电子工程与光电技术学院</option>
+                    <option value="4">经济管理学院</option>
+                    <option value="5">能源与动力工程学院</option>
+                    <option value="6">自动化学院</option>
+                    <option value="7">理学院</option>
+                    <option value="8">外国语学院</option>
+                    <option value="9">公共事务学院</option>
+                    <option value="10">材料科学与工程学院</option>
+                    <option value="11">环境与生物工程学院</option>
+                    <option value="12">设计艺术与传媒学院</option>
+                    <option value="13">教育实验学院</option>
+                    <option value="14">知识产权学院</option>
+                    <option value="15">马克思主义学院</option>
+                    <option value="16">国际教育学院</option>
+                    <option value="17">中法工程师学院</option>
+                  </select>
+                  <label>所在院系</label>
+                </div>
+              </div>
+              <div class="col s6">
+                <div class="input-field">
+                  <input id="first_name" type="text" class="validate">
+                  <label for="first_name">年级</label>
+                </div>
+                <div class="input-field">
+                  <input type="date" class="datepicker" disabled="disable">
+                  <label for="first_name">出生日期</label>
+                </div>
+                <div class="input-field">
+                  <select>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="1">群众</option>
+                    <option value="2">团员</option>
+                    <option value="3">党员</option>
+                    <option value="4">其他</option>
+                  </select>
+                  <label>政治面貌</label>
+                </div>
+                <div class="input-field">
+                  <input id="first_name" type="text" class="validate">
+                  <label for="first_name">民族</label>
+                </div>
+              </div>
+              <div style="position:absolute;bottom:30px;right:30px;">
+                  <a class="waves-effect waves-light btn green white-text" style="width:100px;height:60px;"><input type="submit" value="提交" style="width:100%;height:100%"></a>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+        <div id="test5" class="detail-sec">
+          <div class="cardboard" style="height:400px;">
+
+          </div>
+        </div>
+    <script src="/static/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+
+    <script src="/static/js/materialize.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        $( 'div.tabs' ).tabs();
+        $('select').material_select();
+      });
+      $('.datepicker').pickadate({
+          selectMonths: true, // Creates a dropdown to control month
+          selectYears: 60 // Creates a dropdown of 15 years to control year
+        });
+    </script>
+
+    <script>
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var cw = canvas.width=1920,
+        cx = cw / 2;
+      var ch = canvas.height=1080,
+        cy = ch / 2;
+
+      ctx.fillStyle = "#000";
+      var linesNum = 16;
+      var linesRy = [];
+      var requestId = null;
+
+      function Line(flag) {
+        this.flag = flag;
+        this.a = {};
+        this.b = {};
+        if (flag == "v") {
+          this.a.y = 0;
+          this.b.y = ch;
+          this.a.x = randomIntFromInterval(0, ch);
+          this.b.x = randomIntFromInterval(0, ch);
+        } else if (flag == "h") {
+          this.a.x = 0;
+          this.b.x = cw;
+          this.a.y = randomIntFromInterval(0, cw);
+          this.b.y = randomIntFromInterval(0, cw);
+        }
+        this.va = randomIntFromInterval(25, 100) / 100;
+        this.vb = randomIntFromInterval(25, 100) / 100;
+
+        this.draw = function() {
+
+          ctx.strokeStyle = "#02B1D3";
+          ctx.beginPath();
+          ctx.moveTo(this.a.x, this.a.y);
+          ctx.lineTo(this.b.x, this.b.y);
+          ctx.stroke();
+        }
+
+        this.update = function() {
+          if (this.flag == "v") {
+            this.a.x += this.va;
+            this.b.x += this.vb;
+          } else if (flag == "h") {
+            this.a.y += this.va;
+            this.b.y += this.vb;
+          }
+
+          this.edges();
+        }
+
+        this.edges = function() {
+          if (this.flag == "v") {
+            if (this.a.x < 0 || this.a.x > cw) {
+              this.va *= -1;
+            }
+            if (this.b.x < 0 || this.b.x > cw) {
+              this.vb *= -1;
+            }
+          } else if (flag == "h") {
+            if (this.a.y < 0 || this.a.y > ch) {
+              this.va *= -1;
+            }
+            if (this.b.y < 0 || this.b.y > ch) {
+              this.vb *= -1;
+            }
+          }
+        }
+
+      }
+
+      for (var i = 0; i < linesNum; i++) {
+        var flag = i % 2 == 0 ? "h" : "v";
+        var l = new Line(flag);
+        linesRy.push(l);
+      }
+
+      function Draw() {
+        requestId = window.requestAnimationFrame(Draw);
+        ctx.clearRect(0, 0, cw, ch);
+
+        for (var i = 0; i < linesRy.length; i++) {
+          var l = linesRy[i];
+          l.draw();
+          l.update();
+        }
+        for (var i = 0; i < linesRy.length; i++) {
+          var l = linesRy[i];
+          for (var j = i + 1; j < linesRy.length; j++) {
+            var l1 = linesRy[j]
+            Intersect2lines(l, l1);
+          }
+        }
+      }
+
+      function Init() {
+        linesRy.length = 0;
+        for (var i = 0; i < linesNum; i++) {
+          var flag = i % 2 == 0 ? "h" : "v";
+          var l = new Line(flag);
+          linesRy.push(l);
+        }
+
+        if (requestId) {
+          window.cancelAnimationFrame(requestId);
+          requestId = null;
+        }
+
+        cw = canvas.width=1920,
+          cx = cw / 2;
+        ch = canvas.height=1080,
+          cy = ch / 2;
+
+        Draw();
+      };
+
+      setTimeout(function() {
+        Init();
+
+        addEventListener('resize', Init, false);
+      }, 15);
+
+      function Intersect2lines(l1, l2) {
+        var p1 = l1.a,
+          p2 = l1.b,
+          p3 = l2.a,
+          p4 = l2.b;
+        var denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
+        var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
+        var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
+        var x = p1.x + ua * (p2.x - p1.x);
+        var y = p1.y + ua * (p2.y - p1.y);
+        if (ua > 0 && ub > 0) {
+          markPoint({
+            x: x,
+            y: y
+          })
+        }
+      }
+
+      function markPoint(p) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      function randomIntFromInterval(mn, mx) {
+        return ~~(Math.random() * (mx - mn + 1) + mn);
+      }
+    </script>
+    <script type="text/javascript">
+     //禁止滚动条
+     $(document.body).css({
+       "overflow-x":"hidden",
+       "overflow-y":"hidden"
+     });
+    </script>
+  </body>
 </html>

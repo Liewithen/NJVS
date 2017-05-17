@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from users.forms import LoginForm
+from .forms import LoginForm
 
 
 class LoginView(View):
@@ -48,15 +48,15 @@ class UserPageView(View):
         if user.roles == 2:
             return HttpResponseRedirect('/')
         userinfo = {
-            'name' : user.real_name,
-            'username' : user.username,
-            'idcard' : user.idcard,
-            'gender' : user.gender,
-            'email' : user.email,
-            'phone' : user.phone_number,
-            'birthday' : user.birthday,
-            'major' : user.major,
-            'department' : user.department
+            'name': user.real_name,
+            'username': user.username,
+            'idcard': user.idcard,
+            'gender': user.gender,
+            'email': user.email,
+            'phone': user.phone_number,
+            'birthday': user.birthday,
+            'major': user.major,
+            'department': user.department
         }
         return render(request, 'user/userprofile.html', {'user': userinfo})
 
@@ -67,7 +67,7 @@ class TeamPageView(View):
         user = request.user
         if user.roles == 1:
             return HttpResponseRedirect('/')
-        return render(request, 'user/teamprofile.html',{})
+        return render(request, 'user/teamprofile.html', {})
         
 
 

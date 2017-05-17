@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from users.views import LoginView, LogoutView, UserPageView, TeamPageView
-from verify.views import ValidateView
+from verify.views import ValidateView, checkResult
 from news.views import NewsView
 from activity.views import ActivityView, ActProfileView
 from django.views.static import serve
@@ -14,12 +14,17 @@ import views
 urlpatterns = [
     url(r'^njvs/', xadmin.site.urls),
     url(r'^$', views.index),
-    url(r'^validate/', ValidateView.as_view()),
     url(r'^login/$', LoginView.as_view()),
     url(r'^userprofile/$', UserPageView.as_view()),
     url(r'^teamprofile/$', TeamPageView.as_view()),
     url(r'^media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
     url(r'^ueditor/',include('DjangoUeditor.urls' )),
+]
+
+#verify
+urlpatterns += [
+    url(r'^validate/', ValidateView.as_view()),
+    url(r'^check/', checkResult)
 ]
 
 # news
