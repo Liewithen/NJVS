@@ -11,8 +11,9 @@ class Activity(models.Model):
     application_time = models.DateTimeField(auto_now=True, verbose_name=u"申请时间")
     activity_name = models.CharField(max_length=30, verbose_name=u"活动名称")
     team_name = models.CharField(max_length=100, verbose_name=u"团队名称", default="")
-    start_time = models.DateTimeField(verbose_name=u"开始时间") 
-    end_time = models.DateTimeField(verbose_name=u"结束时间")
+    team_id = models.IntegerField(verbose_name=u"团队账号", default=0)
+    start_time = models.DateField(verbose_name=u"开始时间") 
+    end_time = models.DateField(verbose_name=u"结束时间")
     per_time = models.IntegerField(verbose_name=u"每日时间", default=0)
     join_number = models.IntegerField(verbose_name=u"参与人数", default=0)
     need_number = models.IntegerField(verbose_name=u"人数", default=0)
@@ -28,10 +29,13 @@ class Activity(models.Model):
     def __unicode__(self):
         return self.activity_name
 
+
 class EnterList(models.Model):
+    activity_id = models.IntegerField(verbose_name=u"活动ID", default=0)
     participant = models.CharField(max_length=16, verbose_name=u"参与者")
+    p_name = models.CharField(max_length=30, verbose_name=u"姓名",default='')
     activity = models.CharField(max_length=30, verbose_name=u"活动名称")
-    is_checked = models.BooleanField(verbose_name=u"审核状态")
+    is_checked = models.BooleanField(verbose_name=u"审核状态", default=False)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"申报时间")
 
     class Meta:

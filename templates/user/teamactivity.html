@@ -1,306 +1,76 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>团队活动详情</title>
-    <link rel="stylesheet" href="css/reset.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/materialize.css">
-    <style>
-      canvas {
-        position:fixed;
-        background-color: #eee;
-        display: block;
-        margin: 0 auto;
-        z-index: -1;
-      }
-      td{
-        padding:5px;
-      }
-      td button{
-        width:35px;
-        height:35px;
-        /*display:inline-block;*/
-        margin: 0 8px 4px 8px;
-      }
-      </style>
-  </head>
-
-  <body>
-    <canvas id="canvas"></canvas>
-    <header>
-      <div class="navcontainer">
-        <div class="headrow">
-          <div class="column">
-            <div class="logo">
-              <div class="icon"></div>
-              <div>南京理工大学志愿者服务平台</div>
-            </div>
-          </div>
-          <div class="column">
-            <ul class="nav">
-              <li><a href="#">活动中心</a></li>
-            </ul>
-          </div>
-        </div>
+{% extends "base.html" %}
+{% block title %}
+ 团队活动管理
+{% endblock title %}
+{% block content %}
+<div class="hero">
+    <div class="card horizontal" style="height:300px;">
+      <div class="card-image">
+        <img src="/static/img/8.jpg">
       </div>
-    </header>
-
-      <div class="hero">
-          <div class="card horizontal" style="height:300px;">
-            <div class="card-image">
-              <img src="img/8.jpg">
-            </div>
-            <div class="card-stacked">
-              <ul class="collection with-header black-text" style="margin:0;">
-                <li class="collection-header"><h4>2017保护二月兰青春志愿者</h4></li>
-                <li class="collection-item">时间：</li>
-                <li class="collection-item">预计持续：</li>
-                <li class="collection-item">类型：</li>
-                <li class="collection-item">地点：</li>
-                <li class="collection-item">报名截止日期</li>
-              </ul>
-            </div>
-          </div>
-
-              <div class="card">
-                <div class="card-action" style="padding:2px;height:60px;">
-                  <div class="black-text" style="margin:15px;font-size:20px;">已报名人数：2/20<a href="#" style="height:100%;width:80px;"class="secondary-content">报名活动</a></div>
-                </div>
-              </div>
-
-              <div class="card white black-text">
-                <!-- <ul class="collection with-header">
-                  <li class="collection-header"><h4>报名人员名单</h4></li>
-                  <li class="collection-item"><div>白菜<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                  <li class="collection-item"><div>青菜<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                  <li class="collection-item"><div>萝卜<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                  <li class="collection-item"><div>土豆<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                </ul> -->
-                <table>
-                     <thead>
-                       <tr>
-                           <th data-field="name">姓名</th>
-                           <th data-field="id">学号</th>
-                           <th data-field="college">所属学院</th>
-                           <th data-field="time">志愿者时长</th>
-                       </tr>
-                     </thead>
-
-                     <tbody>
-                       <tr>
-                         <td>张三</td>
-                         <td>914106840523</td>
-                         <td>计算机科学与工程学院</td>
-                         <td>
-                            <input type="text" class="spinner"/>
-                         </td>
-                       </tr>
-                       <tr>
-                         <td>张三</td>
-                         <td>914106840523</td>
-                         <td>计算机科学与工程学院</td>
-                         <td>
-                            <input type="text" class="spinner"/>
-                         </td>
-                       </tr>
-                       <tr>
-                         <td>张三</td>
-                         <td>914106840523</td>
-                         <td>计算机科学与工程学院</td>
-                         <td>
-                            <input type="text" class="spinner"/>
-                         </td>
-                       </tr>
-                     </tbody>
-                   </table>
-              </div>
-              <div style="height:50px;">
-                <a class="waves-effect waves-light btn blue" style="float:right;width:100px;"><input type="submit" value="提交" style="width:100%;height:100%"></a>
-              </div>
-
-      </div>
-
-
-    <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="js/jquery.spinner.js" type="text/javascript"></script>
-
-    </script>
-    <script src="js/index.js"></script>
-
-    <script src="js/materialize.min.js"></script>
-
-    <script>
-      var canvas = document.getElementById("canvas");
-      var ctx = canvas.getContext("2d");
-      var cw = canvas.width=1920,
-        cx = cw / 2;
-      var ch = canvas.height=1080,
-        cy = ch / 2;
-
-      ctx.fillStyle = "#000";
-      var linesNum = 16;
-      var linesRy = [];
-      var requestId = null;
-
-      function Line(flag) {
-        this.flag = flag;
-        this.a = {};
-        this.b = {};
-        if (flag == "v") {
-          this.a.y = 0;
-          this.b.y = ch;
-          this.a.x = randomIntFromInterval(0, ch);
-          this.b.x = randomIntFromInterval(0, ch);
-        } else if (flag == "h") {
-          this.a.x = 0;
-          this.b.x = cw;
-          this.a.y = randomIntFromInterval(0, cw);
-          this.b.y = randomIntFromInterval(0, cw);
-        }
-        this.va = randomIntFromInterval(25, 100) / 100;
-        this.vb = randomIntFromInterval(25, 100) / 100;
-
-        this.draw = function() {
-
-          ctx.strokeStyle = "#02B1D3";
-          ctx.beginPath();
-          ctx.moveTo(this.a.x, this.a.y);
-          ctx.lineTo(this.b.x, this.b.y);
-          ctx.stroke();
-        }
-
-        this.update = function() {
-          if (this.flag == "v") {
-            this.a.x += this.va;
-            this.b.x += this.vb;
-          } else if (flag == "h") {
-            this.a.y += this.va;
-            this.b.y += this.vb;
-          }
-
-          this.edges();
-        }
-
-        this.edges = function() {
-          if (this.flag == "v") {
-            if (this.a.x < 0 || this.a.x > cw) {
-              this.va *= -1;
-            }
-            if (this.b.x < 0 || this.b.x > cw) {
-              this.vb *= -1;
-            }
-          } else if (flag == "h") {
-            if (this.a.y < 0 || this.a.y > ch) {
-              this.va *= -1;
-            }
-            if (this.b.y < 0 || this.b.y > ch) {
-              this.vb *= -1;
-            }
-          }
-        }
-
-      }
-
-      for (var i = 0; i < linesNum; i++) {
-        var flag = i % 2 == 0 ? "h" : "v";
-        var l = new Line(flag);
-        linesRy.push(l);
-      }
-
-      function Draw() {
-        requestId = window.requestAnimationFrame(Draw);
-        ctx.clearRect(0, 0, cw, ch);
-
-        for (var i = 0; i < linesRy.length; i++) {
-          var l = linesRy[i];
-          l.draw();
-          l.update();
-        }
-        for (var i = 0; i < linesRy.length; i++) {
-          var l = linesRy[i];
-          for (var j = i + 1; j < linesRy.length; j++) {
-            var l1 = linesRy[j]
-            Intersect2lines(l, l1);
-          }
-        }
-      }
-
-      function Init() {
-        linesRy.length = 0;
-        for (var i = 0; i < linesNum; i++) {
-          var flag = i % 2 == 0 ? "h" : "v";
-          var l = new Line(flag);
-          linesRy.push(l);
-        }
-
-        if (requestId) {
-          window.cancelAnimationFrame(requestId);
-          requestId = null;
-        }
-
-        cw = canvas.width=1920,
-          cx = cw / 2;
-        ch = canvas.height=1080,
-          cy = ch / 2;
-
-        Draw();
-      };
-
-      setTimeout(function() {
-        Init();
-
-        addEventListener('resize', Init, false);
-      }, 15);
-
-      function Intersect2lines(l1, l2) {
-        var p1 = l1.a,
-          p2 = l1.b,
-          p3 = l2.a,
-          p4 = l2.b;
-        var denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
-        var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
-        var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
-        var x = p1.x + ua * (p2.x - p1.x);
-        var y = p1.y + ua * (p2.y - p1.y);
-        if (ua > 0 && ub > 0) {
-          markPoint({
-            x: x,
-            y: y
-          })
-        }
-      }
-
-      function markPoint(p) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
-        ctx.fill();
-      }
-
-      function randomIntFromInterval(mn, mx) {
-        return ~~(Math.random() * (mx - mn + 1) + mn);
-      }
-    </script>
-
-    <script>
-      $('.carousel.carousel-slider').carousel({fullWidth: true});
-      function round(){
-      $('.carousel.carousel-slider').carousel('next', 1);
-      }
-      var t2 = window.setInterval("round()",5000);
-    </script>
-
-    <script>
-      $('.spinner').spinner();
-    </script>
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="column">
-            <p>Copyright©2017 Liewithen,All Rights Reserved<br>使用过程中有任何问题请联系我们，邮箱:jyyt528@gmail.com</p>
-          </div>
-        </div>
+      <div class="card-stacked">
+        <ul class="collection with-header black-text" style="margin:0;">
+          <li class="collection-header"><h4>{{ act.activity_name }}</h4></li>
+          <li class="collection-item">时间：{{ act.start_time }}</li>
+          <li class="collection-item">预计持续：2周</li>
+          <li class="collection-item">团队名称：{{ act.team_name}}</li>
+          <li class="collection-item">地点：act.place </li>
+          <li class="collection-item">结束日期：{{ act.end_time }}</li>
+        </ul>
       </div>
     </div>
-  </body>
-</html>
+
+        <div class="card">
+          <div class="card-action" style="padding:2px;height:60px;">
+            <div class="black-text" style="margin:15px;font-size:20px;">已报名人数：{{ act.join_number }}/{{ act.need_number }}</div>
+          </div>
+        </div>
+
+        <div class="card white black-text">
+
+          <table>
+                <thead>
+                  <tr>
+                      <th data-field="name">姓名</th>
+                      <th data-field="id">学号</th>
+                      <th data-field="college">所属学院</th>
+                      <th data-field="time">志愿者时长</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for stu in stu_lists %}
+                    <tr>
+                      <td>{{ stu.p_name }}</td>
+                      <td>{{ stu.participant }}</td>
+                      <td>计算机科学与工程学院</td>
+                      <td>
+                        <input type="text" class="spinner"/>
+                      </td>
+                    </tr>                  
+                  {% endfor %}
+
+                </tbody>
+              </table>
+        </div>
+        <div style="height:50px;">
+          <a class="waves-effect waves-light btn blue" style="float:right;width:100px;"><input type="submit" value="提交" style="width:100%;height:100%"></a>
+        </div>
+
+</div>
+{% endblock content %}
+
+{% block otherjs %}
+<script src="/static/js/jquery.spinner.js" type="text/javascript"></script>
+<script>
+  $('.carousel.carousel-slider').carousel({fullWidth: true});
+  function round(){
+  $('.carousel.carousel-slider').carousel('next', 1);
+  }
+  var t2 = window.setInterval("round()",5000);
+</script>
+
+<script>
+  $('.spinner').spinner();
+</script>
+{% endblock otherjs %}

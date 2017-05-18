@@ -4,8 +4,13 @@ from activity.models import Activity
 from news.models import News, Banner
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
-# Create your views here.
+
 def index(request):
-    '''首页'''
     banner = Banner.objects.all()[:4]
-    return render(request, 'index.html', {'banners':banner})
+    news = News.objects.all().order_by('-add_time')[:10]
+    activity = Activity.objects.all().order_by('-start_time')[:5]
+    return render(request, 'index.html', {
+        'banners': banner,
+        'news': news,
+        'acts': activity
+        })

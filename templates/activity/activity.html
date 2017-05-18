@@ -40,7 +40,7 @@
     </header>
 
     <section class="hero" style="width:100%;margin:0;">
-        <div class="row" style="width:100%;">
+        {% comment %}<div class="row" style="width:100%;">
           <div class="row">
             <div class="col s12">
               <ul class="tabs black-text">
@@ -54,30 +54,21 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div>{% endcomment %}
         <div class="row" style="height:1500px;">
           <div class="col s1large">
+            {% for act in acts %}
             <div class="row" style="width:100%">
                 <div class="card red" style="height:200px;position:relative;">
                   <div class="card-content black-text">
-                    <p>hygf1</p>
+                    {{ act.activity_name }} <br>
+                    {{ act.team_name }} <br>
+                    {{ act.start_time }} -- {{ act.end_time }} <br>
+                    {{ act.join_number }}/{{ act.need_number }}
                   </div>
                 </div>
             </div>
-            <div class="row" style="width:100%">
-                <div class="card sky" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf2</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card blue" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf3</p>
-                  </div>
-                </div>
-            </div>
+            {% endfor %}
           </div>
           <div class="col s1large">
             <div class="row" style="width:100%">

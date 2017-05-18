@@ -26,6 +26,8 @@ templates/UserInfo.txt
 dump.rdb
 /.vscode
 *.conf
+/media
+
 
 
 

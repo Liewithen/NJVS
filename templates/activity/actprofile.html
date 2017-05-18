@@ -1,268 +1,79 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>活动详情</title>
-    <link rel="stylesheet" href="/static/css/reset.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/materialize.css">
-    <style>
-      canvas {
-        position:fixed;
-        background-color: #eee;
-        display: block;
-        margin: 0 auto;
-        z-index: -1;
-      }
-      </style>
-  </head>
-
-  <body>
-    <canvas id="canvas"></canvas>
-    <header>
-      <div class="navcontainer">
-        <div class="headrow">
-          <div class="column">
-            <div class="logo">
-              <div class="icon"></div>
-              <div>南京理工大学志愿者服务平台</div>
-            </div>
-          </div>
-          <div class="column">
-            <ul class="nav">
-              <li><a href="#">活动中心</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
-
+{% extends "base.html" %}
+{% block title %}
+  活动详情
+{% endblock title %}
+{% block content %}
       <div class="hero" >
           <div class="card horizontal" style="height:300px;">
             <div class="card-image">
               <img src="/static/img/8.jpg">
             </div>
-            <div class="card-stacked">
-              <ul class="collection with-header black-text" style="margin:0;">
-                <li class="collection-header"><h4>2017保护二月兰青春志愿者</h4></li>
-                <li class="collection-item">时间：</li>
-                <li class="collection-item">预计持续：</li>
-                <li class="collection-item">类型：</li>
-                <li class="collection-item">地点：</li>
-                <li class="collection-item">报名截止日期</li>
-              </ul>
-            </div>
+          <div class="card-stacked">
+            <ul class="collection with-header black-text" style="margin:0;">
+              <li class="collection-header"><h4>2017保护二月兰青春志愿者</h4></li>
+              <li class="collection-item">时间：</li>
+              <li class="collection-item">预计持续：</li>
+              <li class="collection-item">类型：</li>
+              <li class="collection-item">地点：</li>
+              <li class="collection-item">报名截止日期</li>
+            </ul>
           </div>
+      </div>
 
               <div class="card">
                 <div class="card-action" style="padding:2px;height:60px;">
-                  <div class="black-text" style="margin:15px;font-size:20px;">已报名人数：2/20<a href="#" style="height:100%;width:80px;"class="secondary-content">报名活动</a></div>
+                  <div class="black-text" style="margin:15px;font-size:20px;">已报名人数：{{ act.join_number }}/{{ act.need_number }}<a style="height:100%;width:80px;"class="secondary-content" onclick="join();">报名活动</a></div>
                 </div>
               </div>
 
               <div class="card white black-text">
                 <div class="card-content">
-                  <span class="card-title center-align" style="font-size:26px;">2017保护二月兰青春志愿者</span><br>
-                  <p style="font-size:16px;">   每年三月，近三万平方米的水杉园内，被誉为南京“十大春景”之一的二月兰竞相开放。二月兰汇成的紫色花海与水杉林浑然一体，形成的特色景观给整个校园带来了浓浓春意，吸引了大批市民和游人来校踏青赏花。
-五万赏花人挤爆校园，校园变成大公园
-学校校园管理与保卫处统计数据显示，最近两周周末，从二号门进入学校的外来车辆多达一万七千车次，按照每辆车乘坐三人来估算，仅自驾车辆来校赏花人员已达五万余人次。昔日宁静的校园，仿佛一夜之间成为了大公园。
-“往年，赏花的日人流量最多也就一两万，今年来的游人人数暴增。”校园管理与保卫处处长李鸿涛介绍说，3月22日、23日两天，平均每天的游人数量都在5万人次左右。由于校园内容纳车辆有限，出一辆才能进一辆，有时候排队车辆从二号门门口一直堵到了中山门。
-到了周末，不仅水杉林周围，就连二号门沿途至教学区这一段，也都挤满了人，冶园的大草坪上，还有游人搭起了帐篷。校园内的主干道也被车辆堵得水泄不通。
-李鸿涛处长说，“进入校园的车辆太多、前来赏花的市民太多、赏花时的不文明行为太多”，这“三多”使得学校的交通、教学、科研秩序面临巨大的挑战。从3月1日周六开始，校园管理与保卫（下转第四版）（上接第一版）处工作人员全员周末上班，对校内交通进行疏导，对学校治安进行保障，及时处理校园内的各种突发安全事件。学校团委还组织学生志愿者对二月兰进行保护，维护校园环境。
-面对周末暴增的进校车辆，车辆停放疏导工作压力巨大。经常有车主将汽车停放在主干道上，校卫队钱京国师傅说，发现车辆违停现象，大家就要边喊边跑过来进行劝导，请车主将车辆停放到指定地点。有时候上前轻敲车窗，就会遇到车主态度比较蛮横地说：“碰我车子干吗？”、“你凭什么管我啊？”之类的情况。钱师傅说，这个时候就得耐心地跟车主说清楚事情情况，请他们配合。有时候车主不配合的话，就得不停地劝说，直到说服他们把车辆移走，否则，就会有更多的后来车辆效仿违停违放车辆，引起校内交通堵塞。
-往日宁静的校园一时之间无法承受陡然增加的人潮带来的治安、交通隐患。学生志愿者组织者王海同学说：“一名女志愿者试图阻止游人踏入二月兰花丛时，遭到游人的谩骂，这名女志愿者当时就哭了。” 据了解，校园管理与保卫处现已接报数起赏花期间发生的财物被盗案件及因不遵守赏花文明公德而产生的校园管理者与游人间的摩擦事件。
-南理工人在行动，人人都是护花使者
-大批市民在花丛中合影留念，流连忘返，狭窄的林间小道拥堵不堪。花丛中，随处可见被一些不文明赏花的游人踩踏出的一条条小路，即使在一些被警戒带隔离区域的二月兰，也没有逃脱被踩踏的命运。原本春意盎然，美不胜收的校园呈现出一片很“受伤”的景象。
-家住在二号小区的吴老师说，自己已经很久都没有进园赏花了，看着一株株倒伏在地上“哭泣”的花株，“感觉很心疼”。
-为了保护原生态，北水杉林已经用警戒绳拉起来，但是仍有少数不自觉的游人，钻过绳子穿进花丛中拍照。而南水杉林为了减少游人踩踏，在花丛中间已经修了不少小道，但是还有游人踩进盛开的花丛中，开辟新路。
-“请拍照的朋友注意脚下有没有路；花草中拍照的朋友，请脚下留情；请不要超越警戒线。”这几句话，是后勤服务中心住宅区夜间巡逻组董金华师傅最近使用频率最多的几句话。用他自己的话来形容最近的工作状态，那就是：嘴不停，脚不停。二月兰进入花期以后，原本负责住宅区夜间巡逻工作的他，也被“借调”到了二月兰园区周边，负责维护现场秩序，阻拦游人的踩踏。
-从3月14日开始，他就开始了“护花行动”。两天喊下来，嗓子痛得厉害。后来，董师傅借到了一个扩音器，“有了它以后，喊话不用那么大声音，感觉好多了。”董师傅说，每天下班以后，他就把扩音器带回去，像个宝贝似地好好保管起来，“这段时间就得指望它了”。
-提起二月兰保护行动中遇到的窝心事，校园管理与保卫处许嘉悦老师说，大家基本上都已经习以为常了。大家在维护园区秩序的时候都会注意文明用语，但是喊话喊多了，或者遇到游人置之不理的情形，嗓音自然而然会提高一些，有的游人就会不耐烦，反过来质问他们：“关你什么事啊？要你管？那边也被人踩了，你怎么不管？”遇到这样的情况，许老师说，没有别的办法，只能苦口婆心地继续劝说。还有的游人一边说着“马上就走，马上就走”，一边继续往花丛中踩，之后还会跟他们玩起“躲猫猫”的游戏，跑到别处的花丛中继续踩踏。
-如今，爱花护花在我校已经成了全校性的活动了。周末的水杉林附近，经常能看到这样一幅景象：校领导、中层领导干部、师生自发地在维护园区秩序。全校上下，人人都成了护花使者。</p>
+                  <span class="card-title center-align" style="font-size:26px;">{{ act.activity_name }}</span><br>
+                  <p style="font-size:16px;">{{ act.details }}</p>
                 </div>
               </div>
 
       </div>
+{% endblock content %}
+{% block otherjs %}
+  <script>
+    $('.carousel.carousel-slider').carousel({fullWidth: true});
+    function round(){
+    $('.carousel.carousel-slider').carousel('next', 1);
+    }
+    var t2 = window.setInterval("round()",5000);
+  </script>
 
+  <script>
+  var index = Math.floor(Math.random()*10)
+  var position = 'url(\'img/users-' + index + '.svg\')'
+  $('#avatar').css('background-image', position)
+  </script>
 
-    <script src="/static/js/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="/static/js/index.js"></script>
-
-    <script src="/static/js/materialize.min.js"></script>
-
-    <script>
-      var canvas = document.getElementById("canvas");
-      var ctx = canvas.getContext("2d");
-      var cw = canvas.width=1920,
-        cx = cw / 2;
-      var ch = canvas.height=1080,
-        cy = ch / 2;
-
-      ctx.fillStyle = "#000";
-      var linesNum = 16;
-      var linesRy = [];
-      var requestId = null;
-
-      function Line(flag) {
-        this.flag = flag;
-        this.a = {};
-        this.b = {};
-        if (flag == "v") {
-          this.a.y = 0;
-          this.b.y = ch;
-          this.a.x = randomIntFromInterval(0, ch);
-          this.b.x = randomIntFromInterval(0, ch);
-        } else if (flag == "h") {
-          this.a.x = 0;
-          this.b.x = cw;
-          this.a.y = randomIntFromInterval(0, cw);
-          this.b.y = randomIntFromInterval(0, cw);
-        }
-        this.va = randomIntFromInterval(25, 100) / 100;
-        this.vb = randomIntFromInterval(25, 100) / 100;
-
-        this.draw = function() {
-
-          ctx.strokeStyle = "#02B1D3";
-          ctx.beginPath();
-          ctx.moveTo(this.a.x, this.a.y);
-          ctx.lineTo(this.b.x, this.b.y);
-          ctx.stroke();
-        }
-
-        this.update = function() {
-          if (this.flag == "v") {
-            this.a.x += this.va;
-            this.b.x += this.vb;
-          } else if (flag == "h") {
-            this.a.y += this.va;
-            this.b.y += this.vb;
+  <script>
+    function join() {
+      var joinUrl = '/join/?id={{ act.activity_id }}'
+      $.ajax({
+        type: "GET",
+        url: joinUrl,
+        dataType: "text",
+        success: function(data) {
+          if (data === '0') {
+            alert("您已经报名该活动")
           }
-
-          this.edges();
-        }
-
-        this.edges = function() {
-          if (this.flag == "v") {
-            if (this.a.x < 0 || this.a.x > cw) {
-              this.va *= -1;
-            }
-            if (this.b.x < 0 || this.b.x > cw) {
-              this.vb *= -1;
-            }
-          } else if (flag == "h") {
-            if (this.a.y < 0 || this.a.y > ch) {
-              this.va *= -1;
-            }
-            if (this.b.y < 0 || this.b.y > ch) {
-              this.vb *= -1;
-            }
+          if (data === '1') {
+            alert("报名成功")
+            window.location.reload()
           }
-        }
-
-      }
-
-      for (var i = 0; i < linesNum; i++) {
-        var flag = i % 2 == 0 ? "h" : "v";
-        var l = new Line(flag);
-        linesRy.push(l);
-      }
-
-      function Draw() {
-        requestId = window.requestAnimationFrame(Draw);
-        ctx.clearRect(0, 0, cw, ch);
-
-        for (var i = 0; i < linesRy.length; i++) {
-          var l = linesRy[i];
-          l.draw();
-          l.update();
-        }
-        for (var i = 0; i < linesRy.length; i++) {
-          var l = linesRy[i];
-          for (var j = i + 1; j < linesRy.length; j++) {
-            var l1 = linesRy[j]
-            Intersect2lines(l, l1);
+          if (data === '2') {
+            alert("报名人数已满")
           }
+          if (data === '3') {
+            alert("请先登录")
+          }          
         }
-      }
+      });      
+    }
+  </script>
+{% endblock otherjs %}
 
-      function Init() {
-        linesRy.length = 0;
-        for (var i = 0; i < linesNum; i++) {
-          var flag = i % 2 == 0 ? "h" : "v";
-          var l = new Line(flag);
-          linesRy.push(l);
-        }
-
-        if (requestId) {
-          window.cancelAnimationFrame(requestId);
-          requestId = null;
-        }
-
-        cw = canvas.width=1920,
-          cx = cw / 2;
-        ch = canvas.height=1080,
-          cy = ch / 2;
-
-        Draw();
-      };
-
-      setTimeout(function() {
-        Init();
-
-        addEventListener('resize', Init, false);
-      }, 15);
-
-      function Intersect2lines(l1, l2) {
-        var p1 = l1.a,
-          p2 = l1.b,
-          p3 = l2.a,
-          p4 = l2.b;
-        var denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
-        var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
-        var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
-        var x = p1.x + ua * (p2.x - p1.x);
-        var y = p1.y + ua * (p2.y - p1.y);
-        if (ua > 0 && ub > 0) {
-          markPoint({
-            x: x,
-            y: y
-          })
-        }
-      }
-
-      function markPoint(p) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
-        ctx.fill();
-      }
-
-      function randomIntFromInterval(mn, mx) {
-        return ~~(Math.random() * (mx - mn + 1) + mn);
-      }
-    </script>
-
-    <script>
-      $('.carousel.carousel-slider').carousel({fullWidth: true});
-      function round(){
-      $('.carousel.carousel-slider').carousel('next', 1);
-      }
-      var t2 = window.setInterval("round()",5000);
-    </script>
-
-    <script>
-    var index = Math.floor(Math.random()*10)
-    var position = 'url(\'img/users-' + index + '.svg\')'
-    $('#avatar').css('background-image', position)
-    </script>
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="column">
-            <p>Copyright©2017 Liewithen,All Rights Reserved<br>使用过程中有任何问题请联系我们，邮箱:jyyt528@gmail.com</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
