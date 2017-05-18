@@ -12,6 +12,8 @@ class Banner(models.Model):
     image = models.ImageField(max_length=100, upload_to="banner/%Y/%m", verbose_name=u"图片")
     url = models.URLField(max_length=200, verbose_name=u"访问地址")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+    news_type = models.IntegerField(choices=((0, u"外链"),(1, u"内链")), verbose_name=u"新闻类型", default=1)
+    news_id = models.IntegerField(verbose_name=u"新闻地址", default=1)
 
     class Meta:
         verbose_name = u"轮播图"
@@ -20,11 +22,11 @@ class Banner(models.Model):
     def __unicode__(self):
         return self.title
 
+
 class News(models.Model):
     title = models.CharField(max_length=100, verbose_name=u"新闻标题")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
-    detail = UEditorField(verbose_name=u'新闻详情',width=850, height=300, imagePath="news/ueditor/", 
-    filePath="news/ueditor", default='')
+    detail = UEditorField(verbose_name=u'新闻详情', width=850, height=300, imagePath="news/ueditor/", filePath="news/ueditor", default='')
     
     class Meta:
         verbose_name = u"新闻"

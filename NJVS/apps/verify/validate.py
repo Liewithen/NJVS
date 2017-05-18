@@ -51,13 +51,14 @@ class Validate(object):
         '<td.*?>性别</td>.*?<td.*?>&nbsp;(?P<gender>.*?)</td>.*?</tr>.*?<tr.*?>.*?' +
         '<td.*?>出生日期</td>.*?<td.*?>&nbsp;(?P<birthday>.*?)</td>.*?</tr>.*?<tr>.*?' +
         '<td.*?>政治面貌</td>.*?<td.*?>&nbsp;(?P<political>.*?)</td>.*?</tr>.*?<tr>.*?'+
+        '<td.*?>民族</td>.*?<td.*?>&nbsp;(?P<nation>.*?)</td>.*?</tr>.*?<tr>.*?'+
         '<td.*?>身份证编号</td>.*?<td.*?>&nbsp;(?P<id>.*?)</td>.*?</tr>'
         , re.S)    
         info = re.search(pattern, res.content)
         if info.group('gender') == '男':
-            g = 'male'
+            g = 1
         else:
-            g = 'female'
+            g = 0
         try:
             u = User.objects.get(username=self.username)
             u.username = self.username
@@ -69,6 +70,7 @@ class Validate(object):
             u.roles = 1
             u.birthday = info.group('birthday')
             u.political = info.group('political')
+            u.nation = info.group('nation')
             u.idcard = info.group("id")
             u.save()
         except User.DoesNotExist:
@@ -81,6 +83,7 @@ class Validate(object):
                                 roles = 1,
                                 birthday = info.group('birthday'),
                                 political = info.group('political'),
+                                nation = info.group('nation'),
                                 idcard = info.group('id')
                                 )
         

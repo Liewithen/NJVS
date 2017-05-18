@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -5,12 +6,17 @@ from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import LoginForm
+from .models import TeamUser
+from activity.models import Activity, EnterList
 
 
 class LoginView(View):
     def get(self, request):
-        role = request.GET.get('user')
-        return render(request, 'user/login.html', {'role': role}) 
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+        else:
+            role = request.GET.get('user')
+            return render(request, 'user/login.html', {'role': role}) 
 
     def post(self, request):
         login_form = LoginForm(request.POST)
@@ -27,7 +33,7 @@ class LoginView(View):
                 else:
                     return HttpResponseRedirect('/teamprofile')
             else:
-                return render(request, "user/login.html", {'msg':'user or password error', 'role': role}) 
+                return render(request, "user/login.html", {'msg':u'用户名或密码错误', 'role': role}) 
         else:
             return HttpResponseRedirect('/')
 
@@ -47,18 +53,7 @@ class UserPageView(View):
         user = request.user
         if user.roles == 2:
             return HttpResponseRedirect('/')
-        userinfo = {
-            'name': user.real_name,
-            'username': user.username,
-            'idcard': user.idcard,
-            'gender': user.gender,
-            'email': user.email,
-            'phone': user.phone_number,
-            'birthday': user.birthday,
-            'major': user.major,
-            'department': user.department
-        }
-        return render(request, 'user/userprofile.html', {'user': userinfo})
+        return render(request, 'user/userprofile.html')
 
 
 class TeamPageView(View):
@@ -67,8 +62,25 @@ class TeamPageView(View):
         user = request.user
         if user.roles == 1:
             return HttpResponseRedirect('/')
-        return render(request, 'user/teamprofile.html', {})
-        
+        team_id = TeamUser.objects.get(username=user.username).team_id
+        acts_f = Activity.objects.filter(team_id=team_id, is_finished=True)
+        acts_w = Activity.objects.filter(team_id=team_id, is_finished=False)
+        return render(request, 'user/teamprofile.html', {
+            'acts_f': acts_f,
+            'acts_w': acts_w
+        })
 
 
-
+class TeamAdminView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        user = request.user
+        if user.roles == 1:
+            return HttpResponseRedirect('/')
+        act_id = request.GET.get('id')
+        lists = EnterList.objects.filter(activity_id=act_id, is_checked=True)
+        act = Activity.objects.get(activity_id=act_id)
+        return render(request, 'user/teamactivity.html', {
+            'stu_lists': lists,
+            'act': act
+        })
