@@ -53,7 +53,31 @@ class UserPageView(View):
         user = request.user
         if user.roles == 2:
             return HttpResponseRedirect('/')
-        return render(request, 'user/userprofile.html')
+        lists = EnterList.objects.filter(participant=user.username, is_checked=True)
+        acts_f = []
+        acts_w = []
+        for list in lists:
+            try:
+                act = Activity.objects.get(activity_id=list.activity_id)
+                if act.is_finished:
+                    acts_f.append({
+                        'id' : act.activity_id ,
+                        'name' : act.activity_name
+                    })
+                else:
+                    acts_w.append({
+                        'id' : act.activity_id ,
+                        'name' : act.activity_name                        
+                    })
+            except Activity.DoesNotExist:
+                return render(request, 'user/userprofile.html', {
+                    'acts_f': acts_f,
+                    'acts_w': acts_w
+                })
+        return render(request, 'user/userprofile.html', {
+            'acts_f': acts_f,
+            'acts_w': acts_w
+        })
 
 
 class TeamPageView(View):

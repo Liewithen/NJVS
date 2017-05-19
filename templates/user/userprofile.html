@@ -35,23 +35,28 @@
         <div id="test1" class="detail-sec">
            <div class="cardboard" style="height:400px;">
                <ul class="collection with-header">
-                 <li class="collection-header"><p class="btn red" style="margin:5px;padding:5px;width:auto;height:auto;">正在参与的活动</p></li>
+                 <li class="collection-header"><p class="btn red" style="margin:5px;padding:5px;width:auto;height:auto;">即将举办的活动</p></li>
                  {% for act in acts_f %}
                  <li class="collection-item">
-                   <div> {{ act.activity_name }}
-                    <a href="/actprofile/?id={{ act.activity_id }}" class="secondary-content red-text">
+                   <div> {{ act.name }}
+                    <a href="/actprofile/?id={{ act.id }}" class="secondary-content red-text">
                       <strong>活动详情</strong>
                     </a>
                    </div>
                  </li>
-                 {% endfor %}        
+                 {% endfor %} 
                </ul>
                 <ul class="collection with-header">
                   <li class="collection-header"><a class="btn tooltipped blue waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="单击查看更多" style="margin:5px;padding:5px;width:auto;height:auto;">活动历史记录</a></li>
-                  <li class="collection-item"><div>活动1<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
-                  <li class="collection-item"><div>活动2<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
-                  <li class="collection-item"><div>活动3<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
-                  <li class="collection-item"><div>活动4<a href="#!" class="secondary-content red-text"><strong>活动详情</strong></a></div></li>
+                  {% for act in acts_w %}
+                  <li class="collection-item">
+                    <div> {{ act.name }}
+                      <a href="/actprofile/?id={{ act.id }}" class="secondary-content red-text">
+                        <strong>活动详情</strong>
+                      </a>
+                    </div>
+                  </li>
+                  {% endfor %} 
                 </ul>
            </div>
 
@@ -99,7 +104,7 @@
               </div>
 
               <div class="timeboard z-depth-5 blue-grey">
-                <h3 class="hoursum">2</h3>
+                <h3 class="hoursum">{{ user.v_time }}</h3>
                 <h3 class="timesum">小时</h3>
               </div>
               <div style="position:absolute;left:850px;margin-top:20px;">
@@ -200,7 +205,7 @@
                     <option value="">组织名称</option>
                     <option value= "101" >计算机科学与工程学院</option>
                   </select>
-                  <label>主办组织</label>
+                  <label>隶属组织</label>
                 </div>
               </div>
               <div style="position:absolute;bottom:30px;right:30px;">
