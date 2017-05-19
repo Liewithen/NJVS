@@ -35,6 +35,7 @@ class EnterList(models.Model):
     participant = models.CharField(max_length=16, verbose_name=u"参与者")
     p_name = models.CharField(max_length=30, verbose_name=u"姓名",default='')
     activity = models.CharField(max_length=30, verbose_name=u"活动名称")
+    v_time = models.IntegerField(verbose_name=u"志愿时间", default=0)
     is_checked = models.BooleanField(verbose_name=u"审核状态", default=False)
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"申报时间")
 
