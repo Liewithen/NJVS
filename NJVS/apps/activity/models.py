@@ -17,7 +17,7 @@ class Activity(models.Model):
     start_time = models.DateField(verbose_name=u"开始时间") 
     end_time = models.DateField(verbose_name=u"结束时间")
     place = models.CharField(max_length=30, verbose_name=u"活动地点", default="")
-    time_detail = models.TextField(verbose_name=u"活动时间详情") 
+    time_detail = models.TextField(verbose_name=u"活动时间详情", default=u"周一，08：30；周三，14：30") 
     per_time = models.IntegerField(verbose_name=u"每日时间", default=0)
     days = models.IntegerField(verbose_name=u"每周次数", default=0)
     weeks = models.IntegerField(verbose_name=u"重复周数", default=0)
