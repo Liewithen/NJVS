@@ -8,8 +8,9 @@ from django.core import validators
 
 class VTeam(models.Model):
     team_id = models.IntegerField(verbose_name=u"账号")
-    team_name = models.CharField(max_length=16, verbose_name=u"团队名称")
+    team_name = models.CharField(max_length=30, verbose_name=u"团队名称")
     # image = models.ImageField(max_length=100, upload_to="team/%Y/%m", verbose_name=u"图片", blank=True)
+    # department = models.CharField(max_length=30, verbose_name=u"所在院系", default="")
     team_property = models.IntegerField(verbose_name=u"团队性质", blank=True, default=0)
     details = models.TextField(verbose_name=u"团队详情", blank=True, default="")
     leader_id = models.CharField(verbose_name=u"负责人账号", max_length=16, unique=True,)
@@ -36,6 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     political = models.CharField(max_length=30,verbose_name=u"政治面貌",blank=True, default="")
     idcard = models.CharField(max_length=30,verbose_name=u"身份证号",blank=True, default="")
     nation = models.CharField(max_length=30,verbose_name=u"民族",blank=True, default="")
+    team_id = models.IntegerField(verbose_name=u"团队账号", default=0)
     v_time = models.IntegerField(verbose_name=u"志愿时间", default=0)
     phone_number = models.CharField(max_length=11, verbose_name=u"手机号", blank=True)
     roles = models.IntegerField(choices=((0, u"管理员"),(1, u"学生"),(2, u"团队")), verbose_name=u"身份", default=1)

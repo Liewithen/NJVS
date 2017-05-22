@@ -15,7 +15,7 @@ class BaseSetting(object):
     use_bootswatch = True
 
 class VTeamAdmin(object):
-    list_display = ('id', 'team_id', 'team_name', 'team_property', 'person_number', 'v_time')
+    list_display = ('id', 'team_id', 'team_name', 'person_number', 'v_time')
     show_detail_fields = ['id']
     list_filter = ('team_id', 'team_name', 'team_property',)
     search_fields = ('team_id', 'team_name', 'team_property',)

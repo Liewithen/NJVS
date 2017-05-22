@@ -1,470 +1,63 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>文章详情</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/materialize.css">
-    <style>
-      canvas {
-        position:fixed;
-        background-color: #eee;
-        display: block;
-        margin: 0 auto;
-        z-index: -1;
-      }
-      </style>
-  </head>
-
-  <body>
-    <canvas id="canvas"></canvas>
-    <header>
-      <div class="navcontainer">
-        <div class="headrow">
-          <div class="column">
-            <div class="logo">
-              <div class="icon"></div>
-              <div>南京理工大学志愿者服务平台</div>
+{% extends "base.html" %}
+{% block title %}
+活动中心
+{% endblock title %}
+{% block content %}
+   
+    <section class="hero">
+      <div class="row">
+        <div class="col s6">
+          {% for act in acts_w %}
+          <div class="card horizontal" style="height:100px;">
+            <div class="card-image">
+              <img src="/static/img/2.jpg">
             </div>
-          </div>
-          <div class="column">
-            <ul class="nav">
-              <li><a href="#">活动中心</a></li>
-              <li><a href="#">团队登录</a></li>
-              <li><a href="#">个人登录</a></li>
-              <li><a href="#">注册</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="hero" style="width:100%;margin:0;">
-        {% comment %}<div class="row" style="width:100%;">
-          <div class="row">
-            <div class="col s12">
-              <ul class="tabs black-text">
-                <li class="tab col s1large" id="fst"></li>
-                <li class="tab col s1large" id="sec"></li>
-                <li class="tab col s1large" id="thd"></li>
-                <li class="tab col s1large" id="for"></li>
-                <li class="tab col s1large" id="fif"></li>
-                <li class="tab col s1large" id="six"></li>
-                <li class="tab col s1large" id="sev"></li>
+            <div class="card-stacked">
+              <ul class="collection with-header black-text" style="margin:0;">
+                <li class="collection-header"><h6><a href="/actprofile/?id={{act.activity_id}}" class="blue-text">{{ act.activity_name }}</a></h6></li>
+                <li class="collection-item lll">时间：{{ act.start_time }}</li>
+                <li class="collection-item lll">地点：{{ act.start_time }}</li>
+                <li class="collection-item lll">截止日期：{{ act.end_time }}</li>
               </ul>
             </div>
-          </div>
-        </div>{% endcomment %}
-        <div class="row" style="height:1500px;">
-          <div class="col s1large">
-            {% for act in acts %}
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    {{ act.activity_name }} <br>
-                    {{ act.team_name }} <br>
-                    {{ act.start_time }} -- {{ act.end_time }} <br>
-                    {{ act.join_number }}/{{ act.need_number }}
-                  </div>
-                </div>
-            </div>
-            {% endfor %}
-          </div>
-          <div class="col s1large">
-            <div class="row" style="width:100%">
-                <div class="card orange" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card blue" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="col s1large">
-            <div class="row" style="width:100%">
-                <div class="card sky" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card green" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card grey" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="col s1large">
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card sky" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card blue-grey" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card green" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="col s1large">
-            <div class="row" style="width:100%">
-                <div class="card blue" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card green" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card sky" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="col s1large">
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card sky" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card blue-grey" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card green" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="col s1large">
-            <div class="row" style="width:100%">
-                <div class="card red" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card sky" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card blue-grey" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%">
-                <div class="card green" style="height:200px;position:relative;">
-                  <div class="card-content black-text">
-                    <p>hygf</p>
-                  </div>
-                </div>
-            </div>
-          </div>
+          </div>          
+          {% endfor %}
+
         </div>
+        <div class="col s6">
+          {% for act in acts_f %}
+          <div class="card horizontal" style="height:100px;">
+            <div class="card-image">
+              <img src="/static/img/2.jpg">
+            </div>
+            <div class="card-stacked">
+              <ul class="collection with-header black-text" style="margin:0;">
+                <li class="collection-header"><h6><a href="/actprofile/?id={{act.activity_id}}" class="blue-text">{{ act.activity_name }}</a></h6></li>
+                <li class="collection-item lll">时间：{{ act.start_time }} </li>
+                <li class="collection-item lll">地点：{{ act.start_time }} </li>
+                <li class="collection-item lll">截止日期：{{ act.end_time }} </li>
+              </ul>
+            </div>
+          </div>          
+          {% endfor %}
+        </div>
+      </div>
+
     </section>
-
-
-    <script src="/static/js/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="/static/js/index.js"></script>
-
-    <script src="/static/js/materialize.js"></script>
-
-    <script>
-      var canvas = document.getElementById("canvas");
-      var ctx = canvas.getContext("2d");
-      var cw = canvas.width=1920,
-        cx = cw / 2;
-      var ch = canvas.height=1080,
-        cy = ch / 2;
-
-      ctx.fillStyle = "#000";
-      var linesNum = 16;
-      var linesRy = [];
-      var requestId = null;
-
-      function Line(flag) {
-        this.flag = flag;
-        this.a = {};
-        this.b = {};
-        if (flag == "v") {
-          this.a.y = 0;
-          this.b.y = ch;
-          this.a.x = randomIntFromInterval(0, ch);
-          this.b.x = randomIntFromInterval(0, ch);
-        } else if (flag == "h") {
-          this.a.x = 0;
-          this.b.x = cw;
-          this.a.y = randomIntFromInterval(0, cw);
-          this.b.y = randomIntFromInterval(0, cw);
-        }
-        this.va = randomIntFromInterval(25, 100) / 100;
-        this.vb = randomIntFromInterval(25, 100) / 100;
-
-        this.draw = function() {
-
-          ctx.strokeStyle = "#02B1D3";
-          ctx.beginPath();
-          ctx.moveTo(this.a.x, this.a.y);
-          ctx.lineTo(this.b.x, this.b.y);
-          ctx.stroke();
-        }
-
-        this.update = function() {
-          if (this.flag == "v") {
-            this.a.x += this.va;
-            this.b.x += this.vb;
-          } else if (flag == "h") {
-            this.a.y += this.va;
-            this.b.y += this.vb;
-          }
-
-          this.edges();
-        }
-
-        this.edges = function() {
-          if (this.flag == "v") {
-            if (this.a.x < 0 || this.a.x > cw) {
-              this.va *= -1;
-            }
-            if (this.b.x < 0 || this.b.x > cw) {
-              this.vb *= -1;
-            }
-          } else if (flag == "h") {
-            if (this.a.y < 0 || this.a.y > ch) {
-              this.va *= -1;
-            }
-            if (this.b.y < 0 || this.b.y > ch) {
-              this.vb *= -1;
-            }
-          }
-        }
-
-      }
-
-      for (var i = 0; i < linesNum; i++) {
-        var flag = i % 2 == 0 ? "h" : "v";
-        var l = new Line(flag);
-        linesRy.push(l);
-      }
-
-      function Draw() {
-        requestId = window.requestAnimationFrame(Draw);
-        ctx.clearRect(0, 0, cw, ch);
-
-        for (var i = 0; i < linesRy.length; i++) {
-          var l = linesRy[i];
-          l.draw();
-          l.update();
-        }
-        for (var i = 0; i < linesRy.length; i++) {
-          var l = linesRy[i];
-          for (var j = i + 1; j < linesRy.length; j++) {
-            var l1 = linesRy[j]
-            Intersect2lines(l, l1);
-          }
-        }
-      }
-
-      function Init() {
-        linesRy.length = 0;
-        for (var i = 0; i < linesNum; i++) {
-          var flag = i % 2 == 0 ? "h" : "v";
-          var l = new Line(flag);
-          linesRy.push(l);
-        }
-
-        if (requestId) {
-          window.cancelAnimationFrame(requestId);
-          requestId = null;
-        }
-
-        cw = canvas.width=1920,
-          cx = cw / 2;
-        ch = canvas.height=1080,
-          cy = ch / 2;
-
-        Draw();
-      };
-
-      setTimeout(function() {
-        Init();
-
-        addEventListener('resize', Init, false);
-      }, 15);
-
-      function Intersect2lines(l1, l2) {
-        var p1 = l1.a,
-          p2 = l1.b,
-          p3 = l2.a,
-          p4 = l2.b;
-        var denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
-        var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
-        var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
-        var x = p1.x + ua * (p2.x - p1.x);
-        var y = p1.y + ua * (p2.y - p1.y);
-        if (ua > 0 && ub > 0) {
-          markPoint({
-            x: x,
-            y: y
-          })
-        }
-      }
-
-      function markPoint(p) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
-        ctx.fill();
-      }
-
-      function randomIntFromInterval(mn, mx) {
-        return ~~(Math.random() * (mx - mn + 1) + mn);
-      }
-    </script>
-
+{% endblock content %}
+{% block otherjs %}
     <script>
       $('.carousel.carousel-slider').carousel({fullWidth: true});
       function round(){
       $('.carousel.carousel-slider').carousel('next', 1);
       }
       var t2 = window.setInterval("round()",5000);
+      var img = $(".card-image > img")
+      for (var i = 0; i < img.length; i++) {
+        var index = Math.floor(Math.random()*8) + 1
+        var position = '/static/img/' + index + '.jpg'
+        img.eq(i).attr('src',position)
+      }
     </script>
 
-    <script>
-      var myDate = new Date();
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("fst").innerHTML=date;
-      myDate.setDate(myDate.getDate()+1);
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("sec").innerHTML=date;
-      myDate.setDate(myDate.getDate()+1);
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("thd").innerHTML=date;
-      myDate.setDate(myDate.getDate()+1);
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("for").innerHTML=date;
-      myDate.setDate(myDate.getDate()+1);
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("fif").innerHTML=date;
-      myDate.setDate(myDate.getDate()+1);
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("six").innerHTML=date;
-      myDate.setDate(myDate.getDate()+1);
-      var month=myDate.getMonth()+1;
-      var day=myDate.getDate();
-      var date=month+"."+day;
-      document.getElementById("sev").innerHTML=date;
-    </script>
-
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="column">
-            <p>Copyright©2017 Liewithen,All Rights Reserved<br>使用过程中有任何问题请联系我们，邮箱:jyyt528@gmail.com</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+{% endblock otherjs %}
