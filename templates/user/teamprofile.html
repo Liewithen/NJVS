@@ -5,6 +5,7 @@
     <title>团队中心</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/materialize.css">
+    <link rel="stylesheet" href="/static/css/MDicon.css" >
     <style>
       canvas {
         position:fixed;
@@ -24,19 +25,23 @@
 
   <body>
     <canvas id="canvas"></canvas>
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-ext red tooltipped" data-position="top" data-delay="50" data-tooltip="返回首页" href="/">
+        <i class="large material-icons">call_received</i>
+      </a>
+    </div>
       <ul class="tabs cbp-spmenu cbp-spmenu-open cbp-spmenu-vertical cbp-spmenu-left">
         <h3>团队中心</h3>
         <li class="tab"><a class="red waves-effect waves-light" href="#test1">举办活动</a></li>
         <li class="tab"><a class="sky waves-effect waves-light active" href="#test2">申请活动</a></li>
-        <li class="tab"><a class="orange waves-effect waves-light" href="#test3">团队资料</a></li>
-        <li class="tab"><a class="blue waves-effect waves-light" href="#test4">修改团队资料</a></li>
-        <li class="tab"><a class="green waves-effect waves-light" href="#test5">活动中心</a></li>
+        <li class="tab"><a class="orange waves-effect waves-light" href="#test4">团队资料</a></li>
+        <li class="tab" onclick="goto();"><a class="green waves-effect waves-light">活动中心</a></li>
       </ul>
         <div id="test1" class="detail-sec">
            <div class="cardboard" style="height:400px;">
                <ul class="collection with-header">
                  <li class="collection-header"><p class="btn red" style="margin:5px;padding:5px;width:auto;height:auto;">即将举办的活动</p></li>
-                 {% for act in acts_f %}
+                 {% for act in acts_w %}
                  <li class="collection-item">
                    <div> {{ act.activity_name }}
                     <a href="/actadmin/?id={{ act.activity_id }}" class="secondary-content red-text">
@@ -48,7 +53,7 @@
                </ul>
                 <ul class="collection with-header">
                   <li class="collection-header"><a class="btn tooltipped blue waves-effect waves-light" data-position="top" data-delay="50" data-tooltip="单击查看更多" style="margin:5px;padding:5px;width:auto;height:auto;">活动历史记录</a></li>
-                  {% for act in acts_w %}
+                  {% for act in acts_f %}
                   <li class="collection-item">
                     <div> {{ act.activity_name }}
                       <a href="/actadmin/?id={{ act.activity_id }}" class="secondary-content red-text">
@@ -76,184 +81,106 @@
            </div>
         </div>
         <div id="test2" class="detail-sec">
+          <form action="/applyAct/" method="post">
+          {% csrf_token %}
           <div class="cardboard">
             <div class="row" style="padding:10px;position:relative;">
               <div class="col s6">
                 <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="name">活动名称</label>
+                  <input id="activity_name" name ="activity_name" type="text" class="validate">
+                  <label for="activity_name">活动名称</label>
                 </div>
                 <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="numberAc">预计参与人数</label>
+                  <input id="need_number" name ="need_number" type="text" class="validate">
+                  <label for="need_number">预计参与人数</label>
                 </div>
                 <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="EstTime">预计活动时长</label>
+                  <input id="per_time" name ="per_time" type="text" class="validate">
+                  <label for="per_time">预计每日活动时长</label>
                 </div>
                 <div class="input-field">
-                  <input id="email" type="email" class="validate">
-                  <label for="email" data-error="wrong" data-success="right">活动联系人邮箱</label>
+                  <input id="place" name ="place" type="text" class="validate">
+                  <label for="place">活动地点</label>
                 </div>
                 <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="name">活动联系人电话</label>
+                  <input id="contact_qq" name ="contact_qq" class="validate">
+                  <label for="contact_qq" data-error="wrong" data-success="right">活动联系人qq</label>
                 </div>
                 <div class="input-field">
-                  <select>
-                    <option value="" disabled selected>组织名称</option>
-                    <option value="1">机械工程学院</option>
-                    <option value="2">化工学院</option>
-                    <option value="3">电子工程与光电技术学院</option>
-                    <option value="4">经济管理学院</option>
-                    <option value="5">能源与动力工程学院</option>
-                    <option value="6">自动化学院</option>
-                    <option value="7">理学院</option>
-                    <option value="8">外国语学院</option>
-                    <option value="9">公共事务学院</option>
-                    <option value="10">材料科学与工程学院</option>
-                    <option value="11">环境与生物工程学院</option>
-                    <option value="12">设计艺术与传媒学院</option>
-                    <option value="13">教育实验学院</option>
-                    <option value="14">知识产权学院</option>
-                    <option value="15">马克思主义学院</option>
-                    <option value="16">国际教育学院</option>
-                    <option value="17">中法工程师学院</option>
-                  </select>
-                  <label>主办组织</label>
+                  <input id="contact_phone" name = "contact_phone" type="text" class="validate">
+                  <label for="contact_phone">活动联系人电话</label>
                 </div>
+                <div class="red-text">{{ err }}</div>
               </div>
               <div class="col s6">
                 <div class="input-field">
-                  <input type="date" class="datepicker">
-                  <label for="first_time">首次活动日期及时间</label>
+                  <input type="date" class="datepicker" id="start_time" name ="start_time">
+                  <label for="start_time">首次活动日期及时间</label>
+                </div>
+                <div class="input-field">
+                  <input type="date" class="datepicker" id="end_time" name ="end_time">
+                  <label for="end_time">结束活动日期及时间</label>
                 </div>
                 <div class="row">
                   <div class="col s6">
                     <div style="margin-top:9px;">
                       每周活动进行次数：
-                      <input type="text" class="spinner"/>
+                      <input id="days"  name ="days" type="text" class="spinner"/>
                     </div>
                   </div>
                   <div class="col s6">
                     <div style="margin-top:9px;">
                       活动重复周数：
-                      <input type="text" class="spinner"/>
+                      <input id="weeks" name ="weeks" type="text" class="spinner"/>
                     </div>
                   </div>
                 </div>
                 <div class="input-field">
-                  <input id="first_name" type="text" class="validate" style="margin-top:20px;">
-                  <label for="name">活动时间：（例：周一，08：30；周三，14：30）</label>
+                  <input id="time_detail" name ="time_detail" type="text" class="validate" style="margin-top:20px;">
+                  <label for="time_detail">活动时间：（例：周一，08：30；周三，14：30）</label>
                 </div>
                 <div class="input-field" style="margin-top:20px;">
-                  <textarea id="textarea1" class="materialize-textarea"></textarea>
-                  <label for="textarea1">活动详情：</label>
+                  <textarea id="details" name = "details" class="materialize-textarea"></textarea>
+                  <label for="details">活动详情：</label>
                 </div>
               </div>
               <div style="position:absolute;bottom:30px;right:30px;">
-                  <a class="waves-effect waves-light btn green white-text" style="width:100px;height:60px;"><input type="submit" value="提交" style="width:100%;height:100%"></a>
+                  <a class="waves-effect waves-light btn green white-text" style="width:100px;height:60px;"><input type="submit" value="提交" style="width:100%;height:100%" onclick="apply();"></a>
               </div>
             </div>
           </div>
-        </div>
-        <div id="test3" class="detail-sec">
-
+          </form>
         </div>
         <div id="test4" class="detail-sec">
-
-
-          <div class="cardboard black-text">
+           <div class="cardboard black-text">
             <div class="row" style="padding:10px;position:relative;">
               <div class="col s6">
                 <div class="input-field">
-                  <input value="李子琛" id="first_name" type="text" disabled="disabled" class="validate">
-                  <label for="name">姓名</label>
+                  <input value="{{ team.team_name }}" id="first_name" type="text" disabled="disabled" class="validate">
+                  <label for="name">团队名称</label>
                 </div>
                 <div class="input-field">
-                  <input value="914106840523" id="first_name" type="text" class="validate" disabled="disabled">
-                  <label for="StuId">学号</label>
+                  <input value="{{ team.team_id }}" id="first_name" type="text" class="validate" disabled="disabled">
+                  <label for="StuId">团队编号</label>
                 </div>
                 <div class="input-field">
-                  <input value="45653452454445"id="first_name" type="text" class="validate" disabled="disable">
-                  <label for="SigId">身份证号</label>
-                </div>
-                <!-- 性别 -->
-                <div class="row">
-                  <div class="col s2">
-                    <p>
-                        性别：
-                    </p>
-                  </div>
-                  <div class="col s2">
-                    <p>
-                      <input type="radio" name="sex" value="1"/>
-                      <label for="test4" class="black-text">男</label>
-                    </p>
-                  </div>
-                  <div class="col s2">
-                    <p>
-                      <input type="radio" name="sex" value="0">
-                      <label for="test4" class="black-text">女</label>
-                    </p>
-                  </div>
-
-
-                </div>
-                <div class="input-field">
-                  <input id="email" type="email" class="validate">
-                  <label for="email" data-error="wrong" data-success="right">邮件</label>
-                </div>
-                <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="name">电话</label>
-                </div>
-                <div class="input-field">
-                  <select>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="1">机械工程学院</option>
-                    <option value="2">化工学院</option>
-                    <option value="3">电子工程与光电技术学院</option>
-                    <option value="4">经济管理学院</option>
-                    <option value="5">能源与动力工程学院</option>
-                    <option value="6">自动化学院</option>
-                    <option value="7">理学院</option>
-                    <option value="8">外国语学院</option>
-                    <option value="9">公共事务学院</option>
-                    <option value="10">材料科学与工程学院</option>
-                    <option value="11">环境与生物工程学院</option>
-                    <option value="12">设计艺术与传媒学院</option>
-                    <option value="13">教育实验学院</option>
-                    <option value="14">知识产权学院</option>
-                    <option value="15">马克思主义学院</option>
-                    <option value="16">国际教育学院</option>
-                    <option value="17">中法工程师学院</option>
+                  <input id="t_phone" type="text" class="validate">
+                  <label for="t_phone">电话</label>
+                </div>  
+                <!--<div class="input-field">
+                  <select id="department">
+                    <option value= "101" >计算机科学与工程学院</option>
                   </select>
                   <label>所在院系</label>
+                </div>             -->
                 </div>
-              </div>
+
               <div class="col s6">
-                <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="first_name">年级</label>
-                </div>
-                <div class="input-field">
-                  <input type="date" class="datepicker" disabled="disable">
-                  <label for="first_name">出生日期</label>
-                </div>
-                <div class="input-field">
-                  <select>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="1">群众</option>
-                    <option value="2">团员</option>
-                    <option value="3">党员</option>
-                    <option value="4">其他</option>
-                  </select>
-                  <label>政治面貌</label>
-                </div>
-                <div class="input-field">
-                  <input id="first_name" type="text" class="validate">
-                  <label for="first_name">民族</label>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="detail" class="materialize-textarea" length="120"></textarea>
+                    <label for="textarea1">团队详情</label>
+                  </div>
                 </div>
               </div>
               <div style="position:absolute;bottom:30px;right:30px;">
@@ -266,15 +193,10 @@
 
 
         </div>
-        <div id="test5" class="detail-sec">
-          <div class="cardboard" style="height:400px;">
 
-          </div>
-        </div>
     <script src="/static/js/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/static/js/jquery.spinner.js" type="text/javascript"></script>
     <script src="/static/js/materialize.min.js"></script>
-
     <script>
       $(document).ready(function(){
         $( 'div.tabs' ).tabs();
@@ -284,6 +206,9 @@
           selectMonths: true, // Creates a dropdown to control month
           selectYears: 60 // Creates a dropdown of 15 years to control year
         });
+      function goto() {
+        window.location.href='/activity/';
+      }      
     </script>
 
     <script>

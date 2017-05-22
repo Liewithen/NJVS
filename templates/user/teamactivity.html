@@ -12,9 +12,9 @@
         <ul class="collection with-header black-text" style="margin:0;">
           <li class="collection-header"><h4>{{ act.activity_name }}</h4></li>
           <li class="collection-item">时间：{{ act.start_time }}</li>
-          <li class="collection-item">预计持续：2周</li>
+          <li class="collection-item">预计持续：{{ act.weeks }}周</li>
           <li class="collection-item">团队名称：{{ act.team_name}}</li>
-          <li class="collection-item">地点：act.place </li>
+          <li class="collection-item">地点：{{ act.place }} </li>
           <li class="collection-item">结束日期：{{ act.end_time }}</li>
         </ul>
       </div>
@@ -37,7 +37,6 @@
                       <th data-field="time">志愿者时长</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {% for stu in stu_lists %}
                     <tr>

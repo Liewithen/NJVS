@@ -93,7 +93,7 @@ class UserAdmin(object):
                              Row('department', 'v_time'),
                              Row('major', 'phone_number'),
                              Row('roles', 'idcard'),
-                             Row('birthday', 'political'),
+                             Row('birthday', 'political', 'team'),
                              ),
                     Fieldset(_('Permissions'),
                              'groups', 'user_permissions'
