@@ -4,7 +4,7 @@
 {% endblock title %}
 {% block content %}
    
-    <section class="hero">
+    <section class="hero" style="height:100%">
       <div class="row">
         <div class="col s6">
           {% for act in acts_w %}
@@ -54,7 +54,7 @@
       var t2 = window.setInterval("round()",5000);
       var img = $(".card-image > img")
       for (var i = 0; i < img.length; i++) {
-        var index = Math.floor(Math.random()*8) + 1
+        var index = Math.floor(Math.random()*6) + 1
         var position = '/static/img/' + index + '.jpg'
         img.eq(i).attr('src',position)
       }
