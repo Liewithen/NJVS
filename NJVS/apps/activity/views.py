@@ -109,3 +109,19 @@ def joinActivity(request):
             )
             result = 1
             return HttpResponse(result, content_type="application/text")
+
+def addStuTime(request):
+    if request.is_ajax():
+        data = eval(request.POST.get('data'))
+        act_id = data['id']
+        act = Activity.objects.get(activity_id=act_id)
+        if act.is_finished:
+            return HttpResponse('error', content_type="application/text")
+        stus = data['list']
+        for stu in stus:
+            tmp = EnterList.objects.get(activity_id=act_id, participant=stu['username'])
+            tmp.v_time = stu['time']
+            tmp.save()    
+        act.is_finished = True
+        act.save()        
+        return HttpResponse('ok', content_type="application/text")

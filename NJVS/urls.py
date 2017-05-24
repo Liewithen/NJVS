@@ -2,7 +2,7 @@ from django.conf.urls import url
 from users.views import LoginView, LogoutView, UserPageView, TeamPageView, TeamAdminView, changeStuInfo
 from verify.views import ValidateView, checkResult
 from news.views import NewsView
-from activity.views import ActivityView, ActProfileView, joinActivity, ApplyActView
+from activity.views import ActivityView, ActProfileView, joinActivity, ApplyActView, addStuTime
 from django.views.static import serve
 from NJVS.settings import MEDIA_ROOT
 from django.conf.urls import include
@@ -40,6 +40,7 @@ urlpatterns += [
     url(r'^activity/', ActivityView.as_view()),
     url(r'^actprofile/', ActProfileView.as_view()),
     url(r'^join/', joinActivity),
-    url(r'^applyAct/', ApplyActView.as_view())
+    url(r'^applyAct/', ApplyActView.as_view()),
+    url(r'^addStuTime/', addStuTime)
 ]
 
