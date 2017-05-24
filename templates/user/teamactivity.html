@@ -39,12 +39,12 @@
                 </thead>
                 <tbody>
                   {% for stu in stu_lists %}
-                    <tr>
+                    <tr name="stu">
                       <td>{{ stu.p_name }}</td>
-                      <td>{{ stu.participant }}</td>
+                      <td name="username">{{ stu.participant }}</td>
                       <td>计算机科学与工程学院</td>
                       <td>
-                        <input type="text" class="spinner"/>
+                        <input type="text" class="spinner" name="time" value=""/>
                       </td>
                     </tr>                  
                   {% endfor %}
@@ -53,7 +53,7 @@
               </table>
         </div>
         <div style="height:50px;">
-          <a class="waves-effect waves-light btn blue" style="float:right;width:100px;"><input type="submit" value="提交" style="width:100%;height:100%"></a>
+          <a onclick="add();" class="waves-effect waves-light btn blue" style="float:right;width:100px;"><input type="submit" value="提交" style="width:100%;height:100%"></a>
         </div>
 
 </div>
@@ -61,6 +61,35 @@
 
 {% block otherjs %}
 <script src="/static/js/jquery.spinner.js" type="text/javascript"></script>
+<script>
+  function add() {
+    event.preventDefault();
+    var info = { id : {{ act.activity_id }}, list : [] }
+    var users = $('[name=username]')
+    var times = $('[name=time]')
+    for (var i = 0; i < users.length; i++) {
+      temp = {
+        username : users.eq(i).html(),
+        time : times.eq(i).val()
+      }
+      info.list.push(temp)
+    }
+    $.ajax({
+      type: "POST",
+      url: "/addStuTime/",
+      dataType: "json",
+      data: {data :JSON.stringify(info)},
+      success: function(res) {
+        if (res === "error") {
+          alert("不能修改")
+        }
+        else {
+          alert("添加成功")
+        }
+      }
+    })
+  }
+</script>
 <script>
   $('.carousel.carousel-slider').carousel({fullWidth: true});
   function round(){
